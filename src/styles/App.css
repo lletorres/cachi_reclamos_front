@@ -280,9 +280,10 @@ a:focus-visible,
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 1.1rem;
+  margin-bottom: 2;
 }
 .ca-card-footer {
   display: flex;
@@ -947,6 +948,7 @@ a:focus-visible,
     box-shadow 0.2s,
     background 0.2s;
   -webkit-appearance: none;
+  appearance: none;
 }
 .rp-input::placeholder,
 .rp-textarea::placeholder {

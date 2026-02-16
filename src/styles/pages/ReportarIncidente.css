@@ -182,6 +182,7 @@
     box-shadow 0.2s,
     background 0.2s;
   -webkit-appearance: none;
+  appearance: none;
 }
 .rp-input::placeholder,
 .rp-textarea::placeholder {
