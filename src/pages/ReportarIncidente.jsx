@@ -1,0 +1,153 @@
+import { useState } from "react";
+import { createReporte } from "../services/api";
+import { useUser } from "../context/UserContext";
+
+const ReportarIncidente = () => {
+  const { user } = useUser();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    titulo: "",
+    descripcion: "",
+    categoria: "Otros",
+    latitud: "",
+    longitud: "",
+  });
+
+  // Función mágica para obtener la ubicación GPS
+  const obtenerUbicacion = () => {
+    if (!navigator.geolocation) return alert("No soportado");
+
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setFormData({
+          ...formData,
+          // Usamos Number() y toFixed(6) para limpiar la longitud excesiva
+          latitud: parseFloat(pos.coords.latitude.toFixed(6)),
+          longitud: parseFloat(pos.coords.longitude.toFixed(6)),
+        });
+        setLoading(false);
+      },
+      (error) => {
+        setLoading(false);
+      },
+    );
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) return alert("Debes estar logueado para reportar");
+
+    try {
+      const dataParaEnviar = {
+        titulo: formData.titulo,
+        descripcion: formData.descripcion,
+        categoria: formData.categoria,
+        ubicacion: {
+          latitud: formData.latitud,
+          longitud: formData.longitud,
+        },
+      };
+
+      await createReporte(dataParaEnviar);
+      alert("✅ Reporte enviado correctamente a Obras Públicas");
+      // Limpiar formulario
+      setFormData({
+        titulo: "",
+        descripcion: "",
+        categoria: "Otros",
+        latitud: "",
+        longitud: "",
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
+    <div className="container mt-4">
+      <h2>📢 Nuevo Reporte Ciudadano</h2>
+      <form onSubmit={handleSubmit} className="card p-4 shadow">
+        <div className="mb-3">
+          <label className="form-label">Título del problema</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Ej: Bache en calle Salta"
+            value={formData.titulo}
+            onChange={(e) =>
+              setFormData({ ...formData, titulo: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Categoría</label>
+          <select
+            className="form-select"
+            value={formData.categoria}
+            onChange={(e) =>
+              setFormData({ ...formData, categoria: e.target.value })
+            }
+          >
+            <option value="Alumbrado">Alumbrado</option>
+            <option value="Bacheo">Bacheo</option>
+            <option value="Basura">Basura</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Descripción detallada</label>
+          <textarea
+            className="form-control"
+            rows="3"
+            value={formData.descripcion}
+            onChange={(e) =>
+              setFormData({ ...formData, descripcion: e.target.value })
+            }
+            required
+          ></textarea>
+        </div>
+
+        <div className="mb-3 border p-3 bg-light rounded">
+          <h5>📍 Ubicación Geográfica</h5>
+          <button
+            type="button"
+            className="btn btn-info w-100 mb-2"
+            onClick={obtenerUbicacion}
+            disabled={loading}
+          >
+            {loading ? "Obteniendo..." : "Capturar mi ubicación actual"}
+          </button>
+          <div className="row">
+            <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Latitud"
+                value={formData.latitud}
+                readOnly
+              />
+            </div>
+            <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Longitud"
+                value={formData.longitud}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" className="btn btn-primary btn-lg w-100">
+          Enviar Reporte
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ReportarIncidente;
