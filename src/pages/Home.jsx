@@ -55,7 +55,7 @@ const Home = () => {
           {user ? (
             <>
               {/* Si está logueado */}
-              <div className="d-flex flex-column flex-md-row align-items-center gap-3">
+              <div className="d-flex flex-column flex-md-column align-items-center gap-3">
                 <span
                   className="fw-bold text-primary"
                   style={{ fontSize: "1.2rem" }}
@@ -109,37 +109,89 @@ const Home = () => {
           ) : (
             reportes.map((reporte) => (
               <div key={reporte._id} className="col-md-6 col-lg-4 mb-4">
-                <div className="card h-100 shadow-sm border-0">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between mb-2">
+                <div
+                  className="card h-100 shadow-sm border-0 card-hover"
+                  style={{ borderRadius: "18px", overflow: "hidden" }}
+                >
+                  {/* Imagen de cabecera de la tarjeta */}
+                  <div
+                    className="bg-light d-flex align-items-center justify-content-center"
+                    style={{ height: "180px", borderBottom: "1px solid #eee" }}
+                  >
+                    {reporte.imageUrl ? (
+                      <img
+                        src={reporte.imageUrl}
+                        className="w-100 h-100 object-fit-cover"
+                        alt="Evidencia"
+                      />
+                    ) : (
+                      <div className="text-center text-muted">
+                        <span style={{ fontSize: "2rem" }}>📸</span>
+                        <p className="small mb-0">Sin evidencia visual</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="card-body p-4">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
                       <span
-                        className={`badge ${getBadgeColor(reporte.categoria)}`}
+                        className={`badge px-3 py-2 rounded-pill ${getBadgeColor(reporte.categoria)}`}
                       >
                         {reporte.categoria}
                       </span>
-                      <small className="text-muted">
+                      <span className="text-muted small fw-medium">
                         {new Date(reporte.createdAt).toLocaleDateString()}
-                      </small>
+                      </span>
                     </div>
 
-                    <h5 className="card-title">{reporte.titulo}</h5>
-                    <p className="card-text text-secondary">
+                    <h5 className="card-title fw-bold mb-2">
+                      {reporte.titulo}
+                    </h5>
+                    <p
+                      className="card-text text-muted mb-4"
+                      style={{
+                        fontSize: "0.92rem",
+                        display: "-webkit-box",
+                        WebkitLineClamp: "3",
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
                       {reporte.descripcion}
                     </p>
 
-                    <hr />
-                    <div className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                        👤{" "}
-                        {reporte.usuario ? reporte.usuario.nombre : "Anónimo"}
-                      </small>
-
-                      {/* Estado del reporte */}
-                      <span
-                        className={`badge ${reporte.estado === "Resuelto" ? "bg-success" : "bg-secondary"}`}
-                      >
-                        {reporte.estado || "Pendiente"}
-                      </span>
+                    <div className="d-flex justify-content-between align-items-center pt-3 border-top">
+                      <div className="d-flex align-items-center">
+                        <div
+                          className="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2"
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          {reporte.usuario?.nombre?.charAt(0) || "V"}
+                        </div>
+                        <span className="small text-dark fw-semibold">
+                          {reporte.usuario?.nombre || "Vecino"}
+                        </span>
+                      </div>
+                      <div className="status-indicator d-flex align-items-center">
+                        <span
+                          className="dot bg-warning me-2"
+                          style={{
+                            width: "8px",
+                            height: "8px",
+                            borderRadius: "50%",
+                          }}
+                        ></span>
+                        <span
+                          className="small fw-bold text-uppercase"
+                          style={{ fontSize: "0.7rem", color: "#856404" }}
+                        >
+                          Pendiente
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
