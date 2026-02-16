@@ -78,10 +78,3 @@ h2 {
     font-size: 1.8rem;
   }
 }
-.leaflet-container {
-  z-index: 1; /* Para que no tape los menús desplegables si los hubiera */
-}
-
-.map-container {
-  border: 4px solid white;
-}
