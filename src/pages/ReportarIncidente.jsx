@@ -43,8 +43,8 @@ const ReportarIncidente = () => {
         descripcion: formData.descripcion,
         categoria: formData.categoria,
         ubicacion: {
-          latitud: formData.latitud,
-          longitud: formData.longitud,
+          latitud: formData.lat,
+          longitud: formData.lng,
         },
       };
 
