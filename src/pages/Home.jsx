@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getReportes } from "../services/api";
-import MapaReportes from "../components/MapaReportes";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -93,13 +92,7 @@ const Home = () => {
           )}
         </div>
       </div>
-      {/* --- EL MAPA --- */}
-      {!loading && reportes.length > 0 && (
-        <div className="mb-5">
-          <h3 className="mb-3 text-center">📍 Mapa de Incidentes</h3>
-          <MapaReportes reportes={reportes} />
-        </div>
-      )}
+
       {/* --- LISTA DE REPORTES --- */}
       {loading ? (
         <div className="text-center py-5">

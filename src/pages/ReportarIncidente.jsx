@@ -9,30 +9,8 @@ const ReportarIncidente = () => {
     titulo: "",
     descripcion: "",
     categoria: "Otros",
-    latitud: "",
-    longitud: "",
   });
 
-  // Función mágica para obtener la ubicación GPS
-  const obtenerUbicacion = () => {
-    if (!navigator.geolocation) return alert("No soportado");
-
-    setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setFormData({
-          ...formData,
-          // Usamos Number() y toFixed(6) para limpiar la longitud excesiva
-          latitud: parseFloat(pos.coords.latitude.toFixed(6)),
-          longitud: parseFloat(pos.coords.longitude.toFixed(6)),
-        });
-        setLoading(false);
-      },
-      (error) => {
-        setLoading(false);
-      },
-    );
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) return alert("Debes estar logueado para reportar");
@@ -108,38 +86,6 @@ const ReportarIncidente = () => {
             }
             required
           ></textarea>
-        </div>
-
-        <div className="mb-3 border p-3 bg-light rounded">
-          <h5>📍 Ubicación Geográfica</h5>
-          <button
-            type="button"
-            className="btn btn-info w-100 mb-2"
-            onClick={obtenerUbicacion}
-            disabled={loading}
-          >
-            {loading ? "Obteniendo..." : "Capturar mi ubicación actual"}
-          </button>
-          <div className="row">
-            <div className="col">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Latitud"
-                value={formData.latitud}
-                readOnly
-              />
-            </div>
-            <div className="col">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Longitud"
-                value={formData.longitud}
-                readOnly
-              />
-            </div>
-          </div>
         </div>
 
         <button type="submit" className="btn btn-primary btn-lg w-100">
