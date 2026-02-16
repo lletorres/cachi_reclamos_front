@@ -1,86 +1,146 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Para cambiar de página
-import { useUser } from "../context/UserContext"; // Para guardar el usuario
-import { loginService } from "../services/api"; // El servicio que acabamos de crear
+import { useNavigate, Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import { loginService } from "../services/api";
+import "../styles/pages/LoginPage.css";
 
-const LoginPage = () => {
+export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useUser(); // Traemos la función login del contexto
+  const { login } = useUser();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Limpiamos errores viejos
-
+    setError("");
+    setLoading(true);
     try {
-      // 1. Llamamos al Backend
       const response = await loginService(formData.email, formData.password);
-
-      // 2. Si todo sale bien, guardamos en el Contexto
-      // response trae: { user: {...}, token: "..." }
       login(response.user, response.token);
-
-      // 3. Redirigimos al Home
       navigate("/");
     } catch (err) {
-      setError(err.message); // Mostramos el error si falla (ej: "Contraseña incorrecta")
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="card-custom">
-      <h2 className="text-center mb-4">🔐 Iniciar Sesión</h2>
-
-      {error && <div className="alert alert-danger">{error}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Correo Electrónico</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="ejemplo@cachi.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+    <div className="auth-shell">
+      {/* ── PANEL IZQUIERDO ── */}
+      {/* auth-panel-left--login define el gradiente específico de esta página */}
+      <div className="auth-panel-left auth-panel-left--login">
+        <div className="auth-panel-left-texture" />
+        <div className="auth-left-content">
+          <div className="auth-logo auth-logo--login">CachiActiva</div>
+          <div className="auth-tagline">Salta · Argentina</div>
+          <div className="auth-mountain">🏔️</div>
+          <p className="auth-quote">
+            "La participación ciudadana
+            <br />
+            construye comunidad"
+          </p>
+          <p className="auth-quote-sub">
+            Cada reporte que enviás ayuda a mejorar la vida de tus vecinos.
+          </p>
+          <div className="auth-features">
+            <div className="auth-feature-item">
+              <span className="auth-feature-icon">📍</span>
+              Reportes geolocalizados en tiempo real
+            </div>
+            <div className="auth-feature-item">
+              <span className="auth-feature-icon">🔔</span>
+              Notificaciones cuando tu reporte avanza
+            </div>
+            <div className="auth-feature-item">
+              <span className="auth-feature-icon">🌿</span>
+              Plataforma 100% gratuita para vecinos
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="******"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+      {/* ── PANEL DERECHO ── */}
+      <div className="auth-panel-right">
+        <div className="auth-form-box">
+          <div className="auth-form-header">
+            {/* auth-form-eyebrow--login le da el color ocre */}
+            <p className="auth-form-eyebrow auth-form-eyebrow--login">
+              Bienvenido de vuelta
+            </p>
+            <h1 className="auth-form-title">
+              Iniciá
+              <br />
+              sesión
+            </h1>
+            <p className="auth-form-sub">
+              Ingresá para ver y gestionar tus reportes.
+            </p>
+          </div>
+
+          {error && <div className="auth-error">⚠️ {error}</div>}
+
+          <form onSubmit={handleSubmit}>
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="email">
+                Correo electrónico
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                className="auth-input"
+                placeholder="vos@cachi.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="password">
+                Contraseña
+              </label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                className="auth-input"
+                placeholder="Tu contraseña secreta"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* auth-submit-ocre da el color naranja al botón de Login */}
+            <button
+              type="submit"
+              className="auth-submit auth-submit-ocre"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="auth-spinner" /> Verificando...
+                </>
+              ) : (
+                "Ingresar a Cachi Activa →"
+              )}
+            </button>
+          </form>
+
+          <div className="auth-divider">ó</div>
+
+          <div className="auth-form-footer">
+            ¿No tenés cuenta? <Link to="/registro">Registrate gratis</Link>
+          </div>
         </div>
-
-        <button type="submit" className="btn btn-primary w-100 mb-3">
-          Ingresar
-        </button>
-
-        <div className="text-center">
-          <small>
-            ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
-          </small>
-        </div>
-      </form>
+      </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

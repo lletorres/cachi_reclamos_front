@@ -1,0 +1,62 @@
+/* Login page specific gradients / accents */
+.auth-panel-left--login {
+  background: linear-gradient(
+    160deg,
+    var(--sombra) 0%,
+    #5c4a2a 45%,
+    var(--verde) 100%
+  );
+}
+.auth-panel-left--login::before {
+  background:
+    radial-gradient(
+      circle at 25% 40%,
+      rgba(200, 135, 42, 0.35) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 75% 70%,
+      rgba(82, 183, 136, 0.2) 0%,
+      transparent 45%
+    );
+}
+.auth-logo--login span {
+  color: var(--verde-lt);
+}
+.auth-form-eyebrow--login {
+  color: var(--ocre);
+}
+
+/* Responsive for auth pages */
+@media (max-width: 900px) {
+  .auth-left-content {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+  .auth-panel-left {
+    display: none;
+  }
+  .auth-panel-right {
+    padding: 1.5rem 1rem;
+  }
+  .auth-form-title {
+    font-size: 1.6rem;
+  }
+  .auth-logo {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-form-title {
+    font-size: 1.4rem;
+  }
+  .auth-form-sub {
+    font-size: 0.85rem;
+  }
+  .auth-form-box {
+    padding: 0 0.25rem;
+  }
+}

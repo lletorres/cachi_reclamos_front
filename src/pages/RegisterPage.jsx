@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Usamos Link para navegación interna
+import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { registerService } from "../services/api";
+import "../styles/pages/RegisterPage.css";
 
-const RegisterPage = () => {
+export default function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useUser();
 
@@ -13,89 +14,172 @@ const RegisterPage = () => {
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
+    setLoading(true);
     try {
-      // 1. Enviamos los datos al Backend
       const response = await registerService(formData);
-
-      // 2. Si sale bien, el backend nos devuelve el usuario y el token
-      // ¡Lo logueamos automáticamente! 🚀
       login(response.user, response.token);
-
-      // 3. Vamos al Home
-      alert("¡Bienvenido a Cachi Activa!");
       navigate("/");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="card-custom">
-      <h2 className="text-center mb-4">📝 Crear Cuenta</h2>
-
-      {error && <div className="alert alert-danger">{error}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Nombre Completo</label>
-          <input
-            type="text"
-            name="nombre" // Importante: debe coincidir con el estado
-            className="form-control"
-            placeholder="Juan Pérez"
-            value={formData.nombre}
-            onChange={handleChange}
-            required
-          />
+    <div className="auth-shell">
+      {/* ── PANEL IZQUIERDO ── */}
+      {/* auth-panel-left--registro define el gradiente invertido (verde → tierra) */}
+      <div className="auth-panel-left auth-panel-left--registro">
+        <div className="auth-left-content">
+          <div className="auth-logo auth-logo--registro">CachiActiva</div>
+          <div className="auth-tagline">Comunidad · Acción · Cambio</div>
+          <div className="auth-mountain">🌿</div>
+          <p className="auth-quote">
+            "Unite a quienes ya
+            <br />
+            están cambiando Cachi"
+          </p>
+          <p className="auth-quote-sub">
+            En 3 simples pasos ya podés ser parte de la comunidad activa.
+          </p>
+          <div className="auth-steps">
+            <div className="auth-step">
+              <span className="auth-step-num">1</span>
+              <span className="auth-step-text">
+                <strong>Creá tu cuenta</strong> — solo necesitás nombre, mail y
+                contraseña.
+              </span>
+            </div>
+            <div className="auth-step">
+              <span className="auth-step-num">2</span>
+              <span className="auth-step-text">
+                <strong>Reportá un problema</strong> — foto, categoría y
+                descripción.
+              </span>
+            </div>
+            <div className="auth-step">
+              <span className="auth-step-num">3</span>
+              <span className="auth-step-text">
+                <strong>Hacé seguimiento</strong> — vemos juntos cómo avanza la
+                solución.
+              </span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Correo Electrónico</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="juan@cachi.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+      {/* ── PANEL DERECHO ── */}
+      <div className="auth-panel-right">
+        <div className="auth-form-box">
+          <div className="auth-form-header">
+            {/* auth-form-eyebrow--registro le da el color verde */}
+            <p className="auth-form-eyebrow auth-form-eyebrow--registro">
+              Únete a la comunidad
+            </p>
+            <h1 className="auth-form-title">
+              Creá tu
+              <br />
+              cuenta
+            </h1>
+            <p className="auth-form-sub">
+              Gratis, sin publicidad, para vecinos de Cachi.
+            </p>
+          </div>
+
+          {error && <div className="auth-error">⚠️ {error}</div>}
+
+          <form onSubmit={handleSubmit}>
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="nombre">
+                Tu nombre
+              </label>
+              <input
+                id="nombre"
+                type="text"
+                name="nombre"
+                className="auth-input"
+                placeholder="¿Cómo te llaman en el barrio?"
+                value={formData.nombre}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="email">
+                Correo electrónico
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                className="auth-input"
+                placeholder="vos@cachi.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="auth-field">
+              <label className="auth-label" htmlFor="password">
+                Contraseña
+              </label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                className="auth-input"
+                placeholder="Mínimo 6 caracteres"
+                value={formData.password}
+                onChange={handleChange}
+                minLength={6}
+                required
+              />
+              {formData.password.length > 0 && formData.password.length < 6 && (
+                <p className="auth-hint">⚠️ Necesitás al menos 6 caracteres</p>
+              )}
+              {formData.password.length >= 6 && (
+                <p className="auth-hint auth-hint--ok">✅ Contraseña válida</p>
+              )}
+            </div>
+
+            {/* auth-submit-verde da el color verde al botón de Registro */}
+            <button
+              type="submit"
+              className="auth-submit auth-submit-verde"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="auth-spinner" /> Creando cuenta...
+                </>
+              ) : (
+                "Crear cuenta gratis →"
+              )}
+            </button>
+
+            <p className="auth-terms">
+              Al registrarte aceptás usar la plataforma de forma responsable y
+              con fines comunitarios.
+            </p>
+          </form>
+
+          {/* auth-form-footer--registro agrega borde superior y link verde */}
+          <div className="auth-form-footer auth-form-footer--registro">
+            ¿Ya tenés cuenta? <Link to="/login">Iniciá sesión aquí</Link>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label className="form-label">Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="******"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn btn-success w-100 mb-3">
-          Registrarse
-        </button>
-
-        <div className="text-center">
-          <small>
-            ¿Ya tienes cuenta? <Link to="/login">Inicia Sesión aquí</Link>
-          </small>
-        </div>
-      </form>
+      </div>
     </div>
   );
-};
-
-export default RegisterPage;
+}

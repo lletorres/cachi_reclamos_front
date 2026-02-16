@@ -1,0 +1,69 @@
+/* Register page specific gradients / accents */
+.auth-panel-left--registro {
+  background: linear-gradient(
+    160deg,
+    var(--verde) 0%,
+    #3d5a3e 40%,
+    var(--sombra) 100%
+  );
+}
+.auth-panel-left--registro::before {
+  background:
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(200, 135, 42, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 20% 70%,
+      rgba(82, 183, 136, 0.2) 0%,
+      transparent 45%
+    );
+}
+.auth-logo--registro span {
+  color: var(--ocre);
+}
+.auth-form-eyebrow--registro {
+  color: var(--verde);
+}
+.auth-form-footer--registro {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--arena);
+}
+.auth-form-footer--registro a {
+  color: var(--verde);
+}
+
+/* Responsive for register/auth pages */
+@media (max-width: 900px) {
+  .auth-left-content {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+  .auth-panel-left {
+    display: none;
+  }
+  .auth-panel-right {
+    padding: 1.5rem 1rem;
+  }
+  .auth-form-title {
+    font-size: 1.6rem;
+  }
+  .auth-logo {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-form-title {
+    font-size: 1.4rem;
+  }
+  .auth-form-sub {
+    font-size: 0.85rem;
+  }
+  .auth-form-box {
+    padding: 0 0.25rem;
+  }
+}
