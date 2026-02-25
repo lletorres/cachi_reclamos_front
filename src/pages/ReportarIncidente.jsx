@@ -19,15 +19,14 @@ const CATEGORIAS = [
 export default function ReportarIncidente() {
   const navigate = useNavigate();
   const { user } = useUser();
-  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     titulo: "",
     categoria: "",
     descripcion: "",
     imagen: null,
   });
+  const [preview, setPreview] = useState(null); // <--- Para mostrar la foto en pantalla antes de enviar
 
   // ── Validación ────────────────────────────────────────────────────────────
   const tituloOk = formData.titulo.trim().length >= 6;
@@ -49,8 +48,24 @@ export default function ReportarIncidente() {
     e.preventDefault();
     if (!user) return;
     setLoading(true);
+
     try {
-      await createReporte(formData);
+      // 1. Creamos la "caja" especial para archivos y textos
+      const dataParaEnviar = new FormData();
+
+      // 2. Metemos uno por uno los textos
+      dataParaEnviar.append("titulo", formData.titulo);
+      dataParaEnviar.append("categoria", formData.categoria);
+      dataParaEnviar.append("descripcion", formData.descripcion);
+
+      // 3. Metemos la imagen (solo si el usuario seleccionó una)
+      if (formData.imagen) {
+        dataParaEnviar.append("imagen", formData.imagen);
+      }
+
+      // 4. ¡Ahora sí enviamos la caja empacada!
+      await createReporte(dataParaEnviar);
+
       navigate("/");
     } catch (error) {
       alert("Error: " + error.message);
@@ -240,6 +255,7 @@ export default function ReportarIncidente() {
                       type="button"
                       className="rp-preview-remove"
                       onClick={() => {
+                        if (preview) URL.revokeObjectURL(preview); // <--- Limpia la RAM
                         setPreview(null);
                         setFormData({ ...formData, imagen: null });
                       }}

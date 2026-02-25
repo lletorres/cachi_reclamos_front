@@ -43,10 +43,9 @@ export const createReporte = async (reporteData) => {
   const res = await fetch(API_URL_REPORTES, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(reporteData),
+    body: reporteData,
   });
 
   if (!res.ok) {
