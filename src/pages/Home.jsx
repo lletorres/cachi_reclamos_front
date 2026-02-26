@@ -155,8 +155,13 @@ const Home = () => {
           ) : (
             reportesFiltrados.map((reporte) => {
               const meta = getMeta(reporte.categoria);
+              const getEstadoColor = (estado) => {
+                if (estado === "Resuelto") return "var(--verde)";
+                if (estado === "En Proceso") return "#f1c40f";
+                return "#f10f0f"; // Pendiente por defecto
+              };
               return (
-                <article key={reporte._id} className="ca-card">
+                <article key={reporte.id} className="ca-card">
                   {reporte.imageUrl ? (
                     <img
                       src={reporte.imageUrl}
@@ -164,9 +169,9 @@ const Home = () => {
                       alt="Evidencia"
                     />
                   ) : (
-                    <div className="ca-card-img-placeholder">
-                      <span className="icon">{meta.emoji}</span>
-                      <span className="text">Sin foto</span>
+                    /* Opcional: Un fondo gris por si el usuario no subió foto */
+                    <div className="ca-card-img bg-light d-flex align-items-center justify-content-center text-muted">
+                      <span>📸 Sin imagen</span>
                     </div>
                   )}
 
@@ -199,8 +204,13 @@ const Home = () => {
                         </span>
                       </div>
                       <span className="ca-status-pill">
-                        <span className="ca-status-dot" />
-                        Pendiente
+                        <span
+                          className="ca-status-dot"
+                          style={{
+                            backgroundColor: getEstadoColor(reporte.estado),
+                          }}
+                        />
+                        {reporte.estado || "Pendiente"}
                       </span>
                     </div>
                   </div>

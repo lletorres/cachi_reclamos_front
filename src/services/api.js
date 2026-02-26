@@ -67,3 +67,67 @@ export const getReportes = async () => {
 
   return data;
 };
+
+// --- FUNCIONES PARA EL ADMINISTRADOR ---
+
+// Obtener todos los usuarios
+export const getAllUsers = async () => {
+  const token = getToken();
+  const res = await fetch(API_URL_USERS, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Error al cargar usuarios");
+  return await res.json();
+};
+
+// Cambiar el rol de un usuario
+export const updateUserRole = async (userId, nuevoRol) => {
+  const token = getToken();
+  const res = await fetch(`${API_URL_USERS}/${userId}/rol`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ rol: nuevoRol }),
+  });
+  if (!res.ok) throw new Error("Error al actualizar rol");
+  return await res.json();
+};
+
+// Eliminar un usuario
+export const deleteUser = async (userId) => {
+  const token = getToken();
+  const res = await fetch(`${API_URL_USERS}/${userId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Error al eliminar usuario");
+  return await res.json();
+};
+
+// Eliminar un reporte
+export const deleteReporte = async (reporteId) => {
+  const token = getToken();
+  const res = await fetch(`${API_URL_REPORTES}/${reporteId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Error al eliminar reporte");
+  return await res.json();
+};
+
+// Cambiar estado de un reporte
+export const updateEstadoReporte = async (reporteId, nuevoEstado) => {
+  const token = getToken();
+  const res = await fetch(`${API_URL_REPORTES}/${reporteId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ estado: nuevoEstado }),
+  });
+  if (!res.ok) throw new Error("Error al cambiar estado");
+  return await res.json();
+};

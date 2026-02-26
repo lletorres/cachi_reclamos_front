@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
 const ROUTE_LABELS = {
@@ -59,6 +59,16 @@ export default function Navbar() {
               >
                 + Reportar
               </button>
+            )}
+            {/* Mostrar el botón SOLO a los usuarios con rol admin */}
+            {user && user.rol === "admin" && (
+              <Link
+                to="/admin"
+                className="nb nb-outline"
+                style={{ borderColor: "var(--verde)", color: "var(--verde)" }}
+              >
+                🛡️ Panel Admin
+              </Link>
             )}
             <div className="ca-user-pill">
               <div className="ca-avatar-sm">
