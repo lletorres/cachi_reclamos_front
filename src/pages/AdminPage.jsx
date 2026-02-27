@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,6 +13,55 @@ const API_URL_REPORTES = "http://localhost:4000/api/reportes";
 const fetchReportes = async () => {
   const res = await fetch(API_URL_REPORTES);
   return await res.json();
+};
+
+// 🌟 NUEVO COMPONENTE: Dropdown personalizado para el Estado
+const StatusDropdown = ({ estadoActual, onCambiarEstado, getEstadoColor }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Cierra el menú si se hace clic afuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const opciones = ["Pendiente", "En Proceso", "Resuelto"];
+
+  return (
+    <div className="custom-status-dropdown" ref={dropdownRef}>
+      <button
+        className="ca-status-select-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{ backgroundColor: getEstadoColor(estadoActual) }}
+      >
+        {estadoActual}{" "}
+        <span style={{ fontSize: "0.6rem", marginLeft: "4px" }}>▼</span>
+      </button>
+
+      {isOpen && (
+        <div className="custom-dropdown-menu shadow-sm">
+          {opciones.map((opcion) => (
+            <button
+              key={opcion}
+              className={`dropdown-item-btn ${estadoActual === opcion ? "active" : ""}`}
+              onClick={() => {
+                onCambiarEstado(opcion);
+                setIsOpen(false);
+              }}
+            >
+              {opcion}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default function AdminPage() {
@@ -57,7 +106,6 @@ export default function AdminPage() {
     }
   };
 
-  // Función genérica para abrir el modal de confirmación
   const confirmarAccion = (title, message, icon, actionFunction) => {
     setModal({
       isOpen: true,
@@ -66,12 +114,11 @@ export default function AdminPage() {
       icon,
       onConfirm: async () => {
         await actionFunction();
-        setModal({ ...modal, isOpen: false }); // Cerramos el modal
+        setModal({ ...modal, isOpen: false });
       },
     });
   };
 
-  // --- Manejadores de Reportes ---
   const handleCambiarEstado = async (id, nuevoEstado) => {
     try {
       await updateEstadoReporte(id, nuevoEstado);
@@ -90,7 +137,7 @@ export default function AdminPage() {
         try {
           await deleteReporte(id);
           cargarDatos();
-          setReporteDetalle(null); // Si el admin lo borra desde los detalles, cerramos el cartel
+          setReporteDetalle(null);
         } catch (error) {
           alert("Error al eliminar");
         }
@@ -98,7 +145,6 @@ export default function AdminPage() {
     );
   };
 
-  // --- Manejadores de Usuarios ---
   const handleCambiarRol = (id, rolActual) => {
     const nuevoRol = rolActual === "admin" ? "user" : "admin";
     confirmarAccion(
@@ -132,11 +178,10 @@ export default function AdminPage() {
     );
   };
 
-  // Helper para los colores del select
   const getEstadoColor = (estado) => {
     if (estado === "Resuelto") return "var(--verde-lt)";
     if (estado === "En Proceso") return "#f1c40f";
-    return "var(--ocre)"; // Pendiente
+    return "var(--ocre)";
   };
 
   if (loading)
@@ -169,140 +214,188 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* CONTENIDO REPORTES */}
+        {/* ════════ CONTENIDO REPORTES (Flexbox Responsivo) ════════ */}
         {activeTab === "reportes" && (
           <div className="card-custom">
             <h4 className="mb-4 ca-modal-title">Reportes Activos</h4>
-            <div className="table-responsive">
-              <table className="table align-middle">
-                <thead>
-                  <tr
-                    style={{
-                      color: "var(--muted)",
-                      fontSize: "0.85rem",
-                      textTransform: "uppercase",
-                    }}
+
+            <div className="admin-list-container">
+              <div
+                className="d-none d-md-flex pb-2 mb-3 border-bottom text-muted fw-bold text-uppercase"
+                style={{ fontSize: "0.85rem" }}
+              >
+                <div style={{ flex: 2 }}>Título</div>
+                <div style={{ flex: 1 }}>Categoría</div>
+                <div style={{ flex: 1 }}>Estado</div>
+                <div style={{ flex: 1.5, textAlign: "right" }}>Acciones</div>
+              </div>
+
+              <div className="d-flex flex-column gap-3 gap-md-0">
+                {reportes.map((r) => (
+                  <div
+                    key={r.id}
+                    className="d-flex flex-column flex-md-row align-items-md-center py-3 py-md-2 border-bottom"
                   >
-                    <th>Título</th>
-                    <th>Categoría</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reportes.map((r) => (
-                    <tr key={r.id}>
-                      <td className="fw-bold">{r.titulo}</td>
-                      <td>
-                        <span className="ca-badge">{r.categoria}</span>
-                      </td>
-                      <td>
-                        <select
-                          className="ca-status-select"
-                          value={r.estado}
-                          onChange={(e) =>
-                            handleCambiarEstado(r.id, e.target.value)
-                          }
-                          style={{ backgroundColor: getEstadoColor(r.estado) }}
-                        >
-                          <option value="Pendiente">Pendiente</option>
-                          <option value="En Proceso">En Proceso</option>
-                          <option value="Resuelto">Resuelto</option>
-                        </select>
-                      </td>
-                      <td>
-                        {/* BOTÓN NUEVO: VER DETALLES */}
-                        <button
-                          onClick={() => setReporteDetalle(r)}
-                          className="btn btn-sm btn-light rounded-pill px-3 me-2"
-                        >
-                          👁️ Ver
-                        </button>
-                        <button
-                          onClick={() => handleEliminarReporte(r.id)}
-                          className="btn btn-sm btn-outline-danger rounded-pill px-3"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                    <div
+                      style={{ flex: 2 }}
+                      className="fw-bold mb-2 mb-md-0 text-truncate"
+                    >
+                      {r.titulo}
+                    </div>
+
+                    <div
+                      style={{ flex: 1 }}
+                      className="d-flex justify-content-between align-items-center mb-2 mb-md-0"
+                    >
+                      <span
+                        className="d-md-none text-muted fw-bold"
+                        style={{
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Categoría
+                      </span>
+                      <span className="ca-badge">{r.categoria}</span>
+                    </div>
+
+                    <div
+                      style={{ flex: 1 }}
+                      className="d-flex justify-content-between align-items-center mb-3 mb-md-0"
+                    >
+                      <span
+                        className="d-md-none text-muted fw-bold"
+                        style={{
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Estado
+                      </span>
+
+                      {/* 🌟 USAMOS EL NUEVO COMPONENTE DROPDOWN AQUÍ */}
+                      <StatusDropdown
+                        estadoActual={r.estado}
+                        onCambiarEstado={(nuevoEstado) =>
+                          handleCambiarEstado(r.id, nuevoEstado)
+                        }
+                        getEstadoColor={getEstadoColor}
+                      />
+                    </div>
+
+                    <div
+                      style={{ flex: 1.5 }}
+                      className="d-flex justify-content-md-end gap-2"
+                    >
+                      <button
+                        onClick={() => setReporteDetalle(r)}
+                        className="btn btn-sm btn-light rounded-pill flex-grow-1 flex-md-grow-0 px-3"
+                      >
+                        👁️ Ver
+                      </button>
+                      <button
+                        onClick={() => handleEliminarReporte(r.id)}
+                        className="btn btn-sm btn-outline-danger rounded-pill flex-grow-1 flex-md-grow-0 px-3"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* CONTENIDO USUARIOS */}
+        {/* ════════ CONTENIDO USUARIOS (Flexbox Responsivo) ════════ */}
         {activeTab === "usuarios" && (
           <div className="card-custom">
             <h4 className="mb-4 ca-modal-title">Vecinos Registrados</h4>
-            <div className="table-responsive">
-              <table className="table align-middle">
-                <thead>
-                  <tr
-                    style={{
-                      color: "var(--muted)",
-                      fontSize: "0.85rem",
-                      textTransform: "uppercase",
-                    }}
+
+            <div className="admin-list-container">
+              <div
+                className="d-none d-md-flex pb-2 mb-3 border-bottom text-muted fw-bold text-uppercase"
+                style={{ fontSize: "0.85rem" }}
+              >
+                <div style={{ flex: 2 }}>Nombre</div>
+                <div style={{ flex: 2 }}>Email</div>
+                <div style={{ flex: 1 }}>Rol</div>
+                <div style={{ flex: 1.5, textAlign: "right" }}>Acciones</div>
+              </div>
+
+              <div className="d-flex flex-column gap-3 gap-md-0">
+                {usuarios.map((u) => (
+                  <div
+                    key={u.id}
+                    className="d-flex flex-column flex-md-row align-items-md-center py-3 py-md-2 border-bottom"
                   >
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {usuarios.map((u) => (
-                    <tr key={u.id}>
-                      <td className="fw-bold">{u.nombre}</td>
-                      <td className="text-muted">{u.email}</td>
-                      <td>
-                        <span
-                          className="badge rounded-pill"
-                          style={{
-                            background:
-                              u.rol === "admin"
-                                ? "var(--verde)"
-                                : "var(--arena)",
-                            color:
-                              u.rol === "admin" ? "white" : "var(--sombra)",
-                          }}
-                        >
-                          {u.rol?.toUpperCase() || "USER"}
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => handleCambiarRol(u.id, u.rol)}
-                          className="btn btn-sm btn-light rounded-pill me-2"
-                        >
-                          Rol ↻
-                        </button>
-                        <button
-                          onClick={() => handleEliminarUsuario(u.id)}
-                          className="btn btn-sm btn-outline-danger rounded-pill px-3"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                    <div style={{ flex: 2 }} className="fw-bold mb-1 mb-md-0">
+                      {u.nombre}
+                    </div>
+
+                    <div
+                      style={{ flex: 2, fontSize: "0.9rem" }}
+                      className="text-muted mb-3 mb-md-0"
+                    >
+                      {u.email}
+                    </div>
+
+                    <div
+                      style={{ flex: 1 }}
+                      className="d-flex justify-content-between align-items-center mb-3 mb-md-0"
+                    >
+                      <span
+                        className="d-md-none text-muted fw-bold"
+                        style={{
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Rol
+                      </span>
+                      <span
+                        className="badge rounded-pill"
+                        style={{
+                          background:
+                            u.rol === "admin" ? "var(--verde)" : "var(--arena)",
+                          color: u.rol === "admin" ? "white" : "var(--sombra)",
+                        }}
+                      >
+                        {u.rol?.toUpperCase() || "USER"}
+                      </span>
+                    </div>
+
+                    <div
+                      style={{ flex: 1.5 }}
+                      className="d-flex justify-content-md-end gap-2"
+                    >
+                      <button
+                        onClick={() => handleCambiarRol(u.id, u.rol)}
+                        className="btn btn-sm btn-light rounded-pill flex-grow-1 flex-md-grow-0"
+                      >
+                        Rol ↻
+                      </button>
+                      <button
+                        onClick={() => handleEliminarUsuario(u.id)}
+                        className="btn btn-sm btn-outline-danger rounded-pill flex-grow-1 flex-md-grow-0 px-3"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* ════════ RENDERIZADO DEL MODAL DE DETALLES DEL REPORTE ════════ */}
+      {/* ════════ MODAL DETALLES DEL REPORTE ════════ */}
       {reporteDetalle && (
         <div
           className="ca-modal-overlay"
-          onClick={() => setReporteDetalle(null)} // Cierra si haces clic afuera
+          onClick={() => setReporteDetalle(null)}
         >
-          {/* text-start alinea el texto a la izquierda en lugar de centrarlo */}
           <div
             className="ca-modal-box text-start"
             onClick={(e) => e.stopPropagation()}
@@ -317,7 +410,6 @@ export default function AdminPage() {
               ></button>
             </div>
 
-            {/* Muestra la imagen si existe, o un cartelito gris si no subieron foto */}
             {reporteDetalle.imageUrl ? (
               <img
                 src={reporteDetalle.imageUrl}
@@ -349,7 +441,6 @@ export default function AdminPage() {
               {reporteDetalle.categoria}
             </span>
 
-            {/* white-space: pre-wrap permite que se respeten los saltos de línea del texto */}
             <div className="p-3 bg-light rounded border mb-4">
               <p
                 className="mb-0"
@@ -382,7 +473,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* ════════ RENDERIZADO DEL MODAL DE CONFIRMACIÓN GLOBAL ════════ */}
+      {/* ════════ MODAL DE CONFIRMACIÓN GLOBAL ════════ */}
       {modal.isOpen && (
         <div className="ca-modal-overlay">
           <div className="ca-modal-box text-center">

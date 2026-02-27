@@ -1,108 +1,77 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
-const ROUTE_LABELS = {
-  "/": null,
-  "/login": "Iniciar sesión",
-  "/registro": "Crear cuenta",
-  "/reportar": "Nuevo reporte",
-};
-
 export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { user, logout } = useUser();
+  const navigate = useNavigate();
 
-  const isHome = location.pathname === "/";
-  const pageLabel = ROUTE_LABELS[location.pathname];
+  // 🍔 Estado para controlar el menú en celulares
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false); // Cerramos el menú al salir
+    navigate("/");
+  };
+
+  // Función para cerrar el menú al hacer clic en cualquier link
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <nav className="ca-navbar">
-      {/* ── BRAND ── */}
-      <a
-        className="ca-brand"
-        href="/"
-        onClick={(e) => {
-          e.preventDefault();
-          navigate("/");
-        }}
+      {/* ── LOGO ── */}
+      <Link to="/" className="ca-brand" onClick={closeMenu}>
+        Cachi<span>Activa</span>
+      </Link>
+
+      {/* ── BOTÓN HAMBURGUESA (Solo visible en móviles) ── */}
+      <button
+        className="ca-menu-toggle"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        aria-label="Menú"
       >
-        Cachi<span className="ca-brand-accent">Activa</span>
-      </a>
+        {isMenuOpen ? "✕" : "☰"}
+      </button>
 
-      {/* ── BREADCRUMB ── */}
-      <div className="ca-nav-center">
-        {!isHome && pageLabel && (
-          <div className="ca-breadcrumb">
-            <span className="ca-breadcrumb-link" onClick={() => navigate("/")}>
-              Inicio
-            </span>
-            <span className="ca-breadcrumb-sep">›</span>
-            <span className="ca-breadcrumb-current">{pageLabel}</span>
-          </div>
-        )}
-      </div>
+      {/* ── LINKS DEL MENÚ ── */}
+      <div className={`ca-nav-actions ${isMenuOpen ? "open" : ""}`}>
+        {/* 🌟 NUEVO BOTÓN DE INICIO (Visible siempre) */}
+        <Link to="/" className="nb nb-ghost" onClick={closeMenu}>
+          🏠 Inicio
+        </Link>
 
-      {/* ── ACCIONES ── */}
-      <div className="ca-nav-actions">
         {user ? (
           <>
-            {!isHome && (
-              <button className="nb nb-back" onClick={() => navigate("/")}>
-                ← Inicio
-              </button>
-            )}
-            {isHome && (
-              <button
-                className="nb nb-fill"
-                onClick={() => navigate("/reportar")}
-              >
-                + Reportar
-              </button>
-            )}
-            {/* Mostrar el botón SOLO a los usuarios con rol admin */}
-            {user && user.rol === "admin" && (
-              <Link
-                to="/admin"
-                className="nb nb-outline"
-                style={{ borderColor: "var(--verde)", color: "var(--verde)" }}
-              >
+            <Link to="/reportar" className="nb nb-fill" onClick={closeMenu}>
+              ➕ Reportar
+            </Link>
+
+            {user.rol === "admin" && (
+              <Link to="/admin" className="nb nb-outline" onClick={closeMenu}>
                 🛡️ Panel Admin
               </Link>
             )}
+
             <div className="ca-user-pill">
               <div className="ca-avatar-sm">
-                {user.nombre?.charAt(0).toUpperCase()}
+                {user.nombre ? user.nombre.charAt(0).toUpperCase() : "V"}
               </div>
               <span className="ca-user-pill-name">{user.nombre}</span>
             </div>
-            <button className="nb nb-ghost" onClick={logout}>
+
+            <button onClick={handleLogout} className="nb nb-ghost">
               Salir
             </button>
           </>
         ) : (
           <>
-            {!isHome && (
-              <button className="nb nb-back" onClick={() => navigate("/")}>
-                ← Inicio
-              </button>
-            )}
-            {isHome && (
-              <>
-                <button
-                  className="nb nb-outline"
-                  onClick={() => navigate("/login")}
-                >
-                  Ingresar
-                </button>
-                <button
-                  className="nb nb-fill"
-                  onClick={() => navigate("/registro")}
-                >
-                  Registrarse
-                </button>
-              </>
-            )}
+            <Link to="/login" className="nb nb-ghost" onClick={closeMenu}>
+              Ingresar
+            </Link>
+            <Link to="/registro" className="nb nb-fill" onClick={closeMenu}>
+              Registrarse
+            </Link>
           </>
         )}
       </div>

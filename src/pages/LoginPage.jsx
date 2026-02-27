@@ -51,7 +51,7 @@ export default function LoginPage() {
           <div className="auth-features">
             <div className="auth-feature-item">
               <span className="auth-feature-icon">📍</span>
-              Reportes geolocalizados en tiempo real
+              Reportes en tiempo real
             </div>
             <div className="auth-feature-item">
               <span className="auth-feature-icon">🔔</span>

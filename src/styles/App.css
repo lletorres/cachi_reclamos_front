@@ -594,19 +594,10 @@ a:focus-visible,
 /* ═══════════════════════════════════════════════════════════════════════════
    NAVBAR AVANZADO (Navbar.jsx)
    Clases nb-* y ca-nb-* son los botones del navbar global.
-   ca-breadcrumb, ca-user-pill, ca-brand-dot son elementos exclusivos del
+   ca-breadcrumb, ca-user-pill, son elementos exclusivos del
    componente Navbar que antes vivían como STYLES inline.
 ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Brand dot decorativo */
-.ca-brand-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--ocre);
-  border-radius: 50%;
-  margin-bottom: 8px;
-  flex-shrink: 0;
-}
 .ca-brand-accent {
   color: var(--verde);
 }
@@ -735,19 +726,81 @@ a:focus-visible,
   justify-content: center;
   flex-shrink: 0;
 }
+/* ═══════════════════════════════════════════════════════════════════════════
+   MENÚ HAMBURGUESA Y RESPONSIVO DEL NAVBAR
+═══════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 580px) {
+/* Botón Hamburguesa (Oculto en PC por defecto) */
+.ca-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--sombra);
+  cursor: pointer;
+  z-index: 105; /* Se mantiene arriba del menú desplegado */
+  padding: 0.2rem 0.5rem;
+  transition: transform 0.2s;
+}
+
+/* Pantallas de celular o tablets pequeñas */
+@media (max-width: 680px) {
+  .ca-navbar {
+    padding: 0.8rem 1.25rem;
+  }
+
+  /* Mostramos la hamburguesa */
+  .ca-menu-toggle {
+    display: block;
+  }
+
+  /* Escondemos el menú a la derecha y lo volvemos vertical */
+  .ca-nav-actions {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Escondido fuera de la pantalla */
+    width: 260px;
+    height: 100vh;
+    background: rgba(253, 246, 236, 0.96); /* Color crema difuminado */
+    backdrop-filter: blur(15px);
+    border-left: 1px solid var(--arena);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5rem 2rem 2rem;
+    gap: 1.5rem;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  /* Clase que se activa con React al tocar la hamburguesa */
+  .ca-nav-actions.open {
+    right: 0;
+  }
+
+  /* Ajustes de diseño interno para el celular */
+  .nb {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+
+  .ca-user-pill {
+    width: 100%;
+    background: transparent;
+    padding: 0;
+  }
+
   .ca-user-pill-name {
-    display: none;
+    display: block !important;
+    font-size: 1rem;
   }
-  .nb-outline {
-    display: none;
-  }
+
   .ca-breadcrumb {
     display: none;
   }
 }
-
 /* ════════ MODAL DE CONFIRMACIÓN ════════ */
 .ca-modal-overlay {
   position: fixed;
@@ -818,24 +871,84 @@ a:focus-visible,
     opacity: 1;
   }
 }
+/* ════════ DROPDOWN DE ESTADO PERSONALIZADO ════════ */
+.custom-status-dropdown {
+  position: relative;
+  display: inline-block;
+}
 
-/* Ajuste para el Select de la tabla */
-.ca-status-select {
+.ca-status-select-btn {
   border: none;
   border-radius: 50px;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 1.1rem;
   font-size: 0.75rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
   outline: none;
-  appearance: none; /* Oculta la flecha fea por defecto */
-  text-align: center;
-  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s;
 }
-/* Estilo para las opciones abiertas (el menú nativo) */
-.ca-status-select option {
+
+.ca-status-select-btn:hover {
+  opacity: 0.9;
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0; /* Se alinea a la derecha para no salirse de la pantalla */
+  margin-top: 0.5rem;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid var(--arena);
+  overflow: hidden;
+  z-index: 1000;
+  min-width: 140px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: slideDownMenu 0.2s ease-out forwards;
+}
+
+/* En celulares, si está muy apretado, lo forzamos a centrarse */
+@media (max-width: 768px) {
+  .custom-dropdown-menu {
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+
+.dropdown-item-btn {
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
   background: white;
   color: var(--sombra);
-  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dropdown-item-btn:hover {
+  background-color: var(--crema);
+}
+
+.dropdown-item-btn.active {
+  color: var(--ocre);
+  background-color: #fef9ec;
+}
+
+@keyframes slideDownMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
