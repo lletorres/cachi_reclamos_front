@@ -25,14 +25,23 @@
 * {
   box-sizing: border-box;
 }
+html {
+  /* ¡Esta es la magia! Corta todo lo que se salga a los costados */
+  overflow-x: hidden;
 
+  /* Asegura que el cuerpo no mida más que la pantalla */
+  width: 100%;
+}
 body {
   margin: 0;
   background-color: var(--crema);
   font-family: "Lato", sans-serif;
   color: var(--sombra);
   min-height: 100vh;
-  /* Eliminamos los !important y propiedades extrañas */
+  /* corta todo lo que se salga a los costados */
+  overflow-x: hidden;
+  /* Asegura que el cuerpo no mida más que la pantalla */
+  width: 100%;
 }
 
 /* ── ANIMACIONES (una sola definición de cada una) ── */
