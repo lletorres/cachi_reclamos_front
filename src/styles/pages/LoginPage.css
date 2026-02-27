@@ -26,37 +26,3 @@
 .auth-form-eyebrow--login {
   color: var(--ocre);
 }
-
-/* Responsive for auth pages */
-@media (max-width: 900px) {
-  .auth-left-content {
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 720px) {
-  .auth-panel-left {
-    display: none;
-  }
-  .auth-panel-right {
-    padding: 1.5rem 1rem;
-  }
-  .auth-form-title {
-    font-size: 1.6rem;
-  }
-  .auth-logo {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 420px) {
-  .auth-form-title {
-    font-size: 1.4rem;
-  }
-  .auth-form-sub {
-    font-size: 0.85rem;
-  }
-  .auth-form-box {
-    padding: 0 0.25rem;
-  }
-}

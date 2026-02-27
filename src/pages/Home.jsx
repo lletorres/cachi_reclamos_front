@@ -225,7 +225,7 @@ const Home = () => {
       <footer className="ca-footer">
         <p>
           <strong>Cachi Activa</strong> · Hecho con ❤️ por y para la comunidad
-          cachenña · {new Date().getFullYear()}
+          cacheña · {new Date().getFullYear()}
         </p>
       </footer>
     </>
