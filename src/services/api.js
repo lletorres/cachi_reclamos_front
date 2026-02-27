@@ -1,6 +1,8 @@
-// 1. Definimos la URL base para usuarios y para reportes
-const API_URL_USERS = "http://localhost:4000/api/users";
-const API_URL_REPORTES = "http://localhost:4000/api/reportes";
+// 1. Definimos la URL base usando las Variables de Entorno de Vite
+const API_URL = import.meta.env.VITE_API_URL;
+
+const API_URL_USERS = `${API_URL}/users`;
+const API_URL_REPORTES = `${API_URL}/reportes`;
 
 // 2. AGREGAMOS ESTA FUNCIÓN (La que te faltaba y causaba el error)
 // Esta función saca el token del almacenamiento del navegador

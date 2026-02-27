@@ -9,7 +9,12 @@ import {
   updateEstadoReporte,
 } from "../services/api";
 
-const API_URL_REPORTES = "http://localhost:4000/api/reportes";
+// ANTES:
+// const API_URL_REPORTES = "http://localhost:4000/api/reportes";
+
+// AHORA:
+const API_URL = import.meta.env.VITE_API_URL; // Vite lee la variable así
+const API_URL_REPORTES = `${API_URL}/reportes`;
 const fetchReportes = async () => {
   const res = await fetch(API_URL_REPORTES);
   return await res.json();
