@@ -97,10 +97,15 @@ a:focus-visible,
   background: rgba(253, 246, 236, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1.5px solid var(--arena);
-  padding: 0.9rem 2rem;
+  padding: 0.2rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.ca-logo-img {
+  height: 75px; /* Altura ideal para que acompañe a los textos */
+  width: auto;
+  object-fit: contain;
 }
 .ca-brand {
   font-family: "Playfair Display", serif;
@@ -118,6 +123,55 @@ a:focus-visible,
   opacity: 0.8;
 }
 .ca-brand span {
+  color: var(--verde);
+}
+/* ── CONTENEDOR DE TEXTOS APILADOS ── */
+.ca-brand-titles {
+  display: flex;
+  flex-direction: row; /* 👈 Los pone uno al lado del otro */
+  align-items: center; /* 👈 Los centra verticalmente */
+  gap: 15px; /* 👈 Espacio general entre las dos partes */
+}
+
+/* Textos de la Municipalidad */
+.ca-muni-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  padding-right: 15px; /* 👈 Espacio antes de la línea */
+  border-right: 1px solid rgba(0, 0, 0, 0.2); /* 👈 ¡LA LÍNEA VERTICAL! */
+  /* Quitamos la línea de abajo que teníamos antes */
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  align-items: center;
+}
+
+.ca-muni-top {
+  font-size: 11px;
+  color: var(--sombra);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ca-muni-bottom {
+  font-size: 20px;
+  color: var(--sombra);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+/* Texto del Proyecto (Cachi Activa) */
+.ca-project-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ocre); /* O el color principal que uses */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.5px;
+}
+
+.ca-project-name span {
   color: var(--verde);
 }
 .ca-nav-actions {
@@ -191,7 +245,34 @@ a:focus-visible,
     padding: 0.8rem 1.25rem;
   }
 }
-
+/* ── AJUSTES PARA CELULARES (¡Muy importante para que no se apriete todo!) ── */
+@media (max-width: 480px) {
+  .ca-logo-img {
+    height: 40px;
+  }
+  .ca-brand {
+    gap: 8px;
+  }
+  .ca-brand-titles {
+    gap: 8px;
+  }
+  .ca-muni-group {
+    padding-right: 8px;
+  }
+  .ca-muni-top {
+    font-size: 0.4rem;
+  }
+  .ca-muni-bottom {
+    font-size: 0.9rem;
+  }
+  .ca-project-name {
+    font-size: 0.9rem;
+  }
+  .ca-brand-dot {
+    width: 4px;
+    height: 4px;
+  }
+}
 /* ═══════════════════════════════════════════════════════════════════════════
    HERO
 ═══════════════════════════════════════════════════════════════════════════ */
@@ -672,7 +753,7 @@ a:focus-visible,
 .nb {
   font-family: "Lato", sans-serif;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 15px;
   letter-spacing: 0.3px;
   border: none;
   border-radius: 50px;
@@ -705,7 +786,7 @@ a:focus-visible,
 .nb-ghost {
   background: transparent;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 15px;
   padding: 0.45rem 0.9rem;
 }
 .nb-ghost:hover {

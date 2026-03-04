@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import logo_muni from "../assets/images/logo-municipalidad-cachi.png";
 
 export default function Navbar() {
   const { user, logout } = useUser();
@@ -20,9 +21,23 @@ export default function Navbar() {
 
   return (
     <nav className="ca-navbar">
-      {/* ── LOGO ── */}
+      {/* ── LOGO INSTITUCIONAL + NOMBRE DEL PROYECTO ── */}
       <Link to="/" className="ca-brand" onClick={closeMenu}>
-        Cachi<span>Activa</span>
+        <img src={logo_muni} alt="Escudo de Cachi" className="ca-logo-img" />
+
+        <div className="ca-brand-titles">
+          {/* Parte Municipal */}
+          <div className="ca-muni-group">
+            <span className="ca-muni-top">MUNICIPALIDAD DE</span>
+            <span className="ca-muni-bottom">CACHI</span>
+          </div>
+
+          {/* Parte del Proyecto */}
+          <div className="ca-project-name">
+            <div className="ca-brand-dot"></div>
+            Cachi<span>Activa</span>
+          </div>
+        </div>
       </Link>
 
       {/* ── BOTÓN HAMBURGUESA (Solo visible en móviles) ── */}
@@ -38,7 +53,7 @@ export default function Navbar() {
       <div className={`ca-nav-actions ${isMenuOpen ? "open" : ""}`}>
         {/* 🌟 NUEVO BOTÓN DE INICIO (Visible siempre) */}
         <Link to="/" className="nb nb-ghost" onClick={closeMenu}>
-          🏠 Inicio
+          Inicio
         </Link>
 
         {user ? (

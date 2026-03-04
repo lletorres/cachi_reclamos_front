@@ -48,7 +48,6 @@ const Home = () => {
       <section className="ca-hero">
         <div className="ca-hero-texture" />
         <div className="ca-hero-content">
-          <p className="ca-hero-eyebrow">🏔️ Salta · Argentina</p>
           <h1 className="ca-hero-title">
             Tu voz,
             <br />
