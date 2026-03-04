@@ -688,48 +688,6 @@ a:focus-visible,
    componente Navbar que antes vivían como STYLES inline.
 ═══════════════════════════════════════════════════════════════════════════ */
 
-.ca-brand-accent {
-  color: var(--verde);
-}
-.ca-brand:hover {
-  opacity: 0.8;
-}
-.ca-brand-accent {
-  color: var(--verde);
-}
-
-/* Breadcrumb */
-.ca-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.78rem;
-  color: var(--muted);
-  font-weight: 400;
-}
-.ca-breadcrumb-sep {
-  opacity: 0.4;
-}
-.ca-breadcrumb-current {
-  font-weight: 700;
-  color: var(--sombra);
-}
-.ca-breadcrumb-link {
-  cursor: pointer;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 0.15s;
-}
-.ca-breadcrumb-link:hover {
-  text-decoration: underline;
-}
-
-/* Nav center flex helper */
-.ca-nav-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
 /* User pill */
 .ca-user-pill {
   display: flex;
@@ -885,10 +843,6 @@ a:focus-visible,
   .ca-user-pill-name {
     display: block !important;
     font-size: 1rem;
-  }
-
-  .ca-breadcrumb {
-    display: none;
   }
 }
 /* ════════ MODAL DE CONFIRMACIÓN ════════ */
