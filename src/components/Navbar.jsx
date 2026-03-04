@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import logo_muni from "../assets/images/logo-municipalidad-cachi.png";
+import logo_muni from "../assets/images/logo-municipalidad-cachi.webp";
 
 export default function Navbar() {
   const { user, logout } = useUser();
