@@ -1,4 +1,47 @@
 /* HOME — HERO + FEED */
+/* ── MARCA EN EL HERO (EYEBROW) ── */
+.ca-hero-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(253, 246, 236, 0.1); /* Un fondo sutilmente transparente */
+  border: 1px solid rgba(253, 246, 236, 0.2);
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 1.5rem; /* Separación con el título principal */
+
+  /* Tipografía */
+  font-family: "Lato", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--crema); /* Asumiendo que el fondo de tu Hero es oscuro */
+  text-transform: uppercase;
+}
+
+.ca-hero-brand strong {
+  font-weight: 900;
+  color: var(--ocre); /* Resalta la palabra "Activa" */
+}
+
+.ca-hero-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--ocre);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(200, 135, 42, 0.6); /* Un pequeño brillo */
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+  .ca-hero-brand {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    margin-bottom: 1rem;
+  }
+}
 
 /* HERO */
 .ca-hero {

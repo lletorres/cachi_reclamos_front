@@ -48,6 +48,10 @@ const Home = () => {
       <section className="ca-hero">
         <div className="ca-hero-texture" />
         <div className="ca-hero-content">
+          <div className="ca-hero-brand">
+            <span className="ca-hero-dot"></span>
+            Cachi<strong>Activa</strong>
+          </div>
           <h1 className="ca-hero-title">
             Tu voz,
             <br />
