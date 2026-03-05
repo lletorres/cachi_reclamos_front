@@ -44,6 +44,7 @@ body {
 }
 
 /* ── ANIMACIONES (una sola definición de cada una) ── */
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

@@ -1,5 +1,11 @@
 /* HOME — HERO + FEED */
 /* ── MARCA EN EL HERO (EYEBROW) ── */
+/* Aplicamos la sombra al texto en cursiva, a los números y a la palabra "ACTIVA" */
+.ca-hero-title em,
+.ca-stat-num,
+.ca-hero-brand strong {
+  text-shadow: 0 4px 16px rgba(20, 15, 10, 0.6); /* Una sombra marrón muy oscura y suave */
+}
 .ca-hero-brand {
   display: inline-flex;
   align-items: center;
@@ -32,6 +38,18 @@
   border-radius: 50%;
   display: inline-block;
   box-shadow: 0 0 10px rgba(200, 135, 42, 0.6); /* Un pequeño brillo */
+  animation: onlinePulse 2s infinite;
+}
+@keyframes onlinePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 135, 42, 0.8); /* Empieza con un borde ocre fuerte pegadito al punto */
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(200, 135, 42, 0); /* Se expande 8px y se vuelve transparente */
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 135, 42, 0); /* Vuelve a cero esperando el próximo latido */
+  }
 }
 
 /* Ajuste para móviles */
