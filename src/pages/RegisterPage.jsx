@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { registerService } from "../services/api";
 import "../styles/pages/RegisterPage.css";
+import logoLogin from "../assets/images/logo-login1-comprimido.webp";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -42,7 +43,20 @@ export default function RegisterPage() {
         <div className="auth-left-content">
           <div className="auth-logo auth-logo--registro">CachiActiva</div>
           <div className="auth-tagline">Comunidad · Acción · Cambio</div>
-          <div className="auth-mountain">🌿</div>
+          <div className="auth-logo-mountain">
+            <img
+              src={logoLogin}
+              alt="Logo Cachi Activa"
+              style={{
+                width: "180px",
+                height: "auto",
+                opacity: 0.8,
+                margin: "0.5rem 0" /* 👈 Le da un respiro arriba y abajo */,
+                filter:
+                  "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4))" /* 👈 Magia: sombra suave */,
+              }}
+            />
+          </div>
           <p className="auth-quote">
             "Unite a quienes ya
             <br />

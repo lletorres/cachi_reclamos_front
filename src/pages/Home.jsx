@@ -10,6 +10,7 @@ const Home = () => {
   const [reportes, setReportes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState("Todos");
+  const [visibles, setVisibles] = useState(12);
 
   useEffect(() => {
     cargarReportes();
@@ -32,6 +33,14 @@ const Home = () => {
     filtro === "Todos"
       ? reportes
       : reportes.filter((r) => r.categoria === filtro);
+  // 👇 NUEVO: Cortamos el arreglo para mostrar solo la cantidad permitida
+  const reportesAMostrar = reportesFiltrados.slice(0, visibles);
+
+  // 👇 NUEVA FUNCIÓN: Para cambiar el filtro y reiniciar el contador
+  const handleFiltro = (cat) => {
+    setFiltro(cat);
+    setVisibles(12); // Volvemos a mostrar 12 al cambiar de categoría
+  };
 
   const categoriaMeta = {
     Bacheo: { emoji: "🛣️", color: "#c0392b", bg: "#fdf0ee" },
@@ -41,6 +50,11 @@ const Home = () => {
   };
 
   const getMeta = (cat) => categoriaMeta[cat] || categoriaMeta["Otros"];
+  const getEstadoColor = (estado) => {
+    if (estado === "Resuelto") return "var(--verde)";
+    if (estado === "En Proceso") return "#f1c40f";
+    return "#f10f0f"; // Pendiente por defecto
+  };
 
   return (
     <>
@@ -131,7 +145,7 @@ const Home = () => {
               <button
                 key={cat}
                 className={`ca-chip ${filtro === cat ? "active" : ""}`}
-                onClick={() => setFiltro(cat)}
+                onClick={() => handleFiltro(cat)}
               >
                 {cat === "Todos" ? "🗂 Todos" : `${getMeta(cat).emoji} ${cat}`}
               </button>
@@ -156,13 +170,9 @@ const Home = () => {
               </p>
             </div>
           ) : (
-            reportesFiltrados.map((reporte) => {
+            reportesAMostrar.map((reporte) => {
               const meta = getMeta(reporte.categoria);
-              const getEstadoColor = (estado) => {
-                if (estado === "Resuelto") return "var(--verde)";
-                if (estado === "En Proceso") return "#f1c40f";
-                return "#f10f0f"; // Pendiente por defecto
-              };
+
               return (
                 <article key={reporte.id} className="ca-card">
                   {reporte.imageUrl ? (
@@ -222,6 +232,18 @@ const Home = () => {
             })
           )}
         </div>
+        {/* 🌟 BOTÓN CARGAR MÁS 🌟 */}
+        {visibles < reportesFiltrados.length && (
+          <div style={{ textAlign: "center", marginTop: "2rem" }}>
+            <button
+              className="ca-btn-hero ca-btn-mas-reportes"
+              onClick={() => setVisibles(visibles + 12)}
+              style={{ padding: "10px 24px", fontSize: "0.9rem" }}
+            >
+              Cargar más reportes
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ── FOOTER ── */}

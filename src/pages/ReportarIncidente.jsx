@@ -31,7 +31,7 @@ export default function ReportarIncidente() {
   // ── Validación ────────────────────────────────────────────────────────────
   const tituloOk = formData.titulo.trim().length >= 6;
   const catOk = formData.categoria !== "";
-  const descOk = formData.descripcion.trim().length >= 15;
+  const descOk = formData.descripcion.trim().length >= 10;
   const formValid = tituloOk && catOk && descOk;
 
   const step = !tituloOk ? 1 : !catOk ? 2 : !descOk ? 2 : 3;
@@ -176,7 +176,7 @@ export default function ReportarIncidente() {
                   >
                     {descOk
                       ? "✅ Listo"
-                      : `${formData.descripcion.length}/15 mín.`}
+                      : `${formData.descripcion.length}/10 mín.`}
                   </span>
                 </div>
                 <textarea

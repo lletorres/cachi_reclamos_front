@@ -439,7 +439,17 @@
   font-weight: 700;
   letter-spacing: 0.5px;
 }
-
+.ca-btn-mas-reportes {
+  background: var(--ocre);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+}
+.ca-btn-mas-reportes:hover {
+  background: #e09930;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(200, 135, 42, 0.5);
+}
 .ca-footer {
   background: var(--sombra);
   color: rgba(255, 255, 255, 0.45);

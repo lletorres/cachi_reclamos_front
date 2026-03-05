@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { loginService } from "../services/api";
 import "../styles/pages/LoginPage.css";
+import logoLogin from "../assets/images/logo-login1-comprimido.webp";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -22,7 +23,16 @@ export default function LoginPage() {
     try {
       const response = await loginService(formData.email, formData.password);
       login(response.user, response.token);
-      navigate("/");
+
+      // 🌟 NUEVA LÓGICA DE REDIRECCIÓN INTELIGENTE
+      // Asumiendo que tu base de datos guarda el rol en la propiedad "rol" o "role"
+      const userRole = response.user.rol;
+
+      if (userRole === "admin" || userRole === "administrador") {
+        navigate("/admin"); // Lo mandamos directo a su oficina virtual
+      } else {
+        navigate("/"); // Es un vecino, va al Home
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -39,7 +49,20 @@ export default function LoginPage() {
         <div className="auth-left-content">
           <div className="auth-logo auth-logo--login">CachiActiva</div>
           <div className="auth-tagline">Salta · Argentina</div>
-          <div className="auth-mountain">🏔️</div>
+          <div className="auth-logo-mountain">
+            <img
+              src={logoLogin}
+              alt="Logo Cachi Activa"
+              style={{
+                width: "180px",
+                height: "auto",
+                opacity: 0.8,
+                margin: "0.5rem 0" /* 👈 Le da un respiro arriba y abajo */,
+                filter:
+                  "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4))" /* 👈 Magia: sombra suave */,
+              }}
+            />
+          </div>
           <p className="auth-quote">
             "La participación ciudadana
             <br />

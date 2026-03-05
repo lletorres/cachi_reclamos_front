@@ -230,6 +230,8 @@ export default function AdminPage() {
                 style={{ fontSize: "0.85rem" }}
               >
                 <div style={{ flex: 2 }}>Título</div>
+                <div style={{ flex: 1.5 }}>Vecino</div>
+                <div style={{ flex: 1 }}>Fecha</div>
                 <div style={{ flex: 1 }}>Categoría</div>
                 <div style={{ flex: 1 }}>Estado</div>
                 <div style={{ flex: 1.5, textAlign: "right" }}>Acciones</div>
@@ -241,13 +243,54 @@ export default function AdminPage() {
                     key={r.id}
                     className="d-flex flex-column flex-md-row align-items-md-center py-3 py-md-2 border-bottom"
                   >
+                    {/* Título */}
                     <div
                       style={{ flex: 2 }}
-                      className="fw-bold mb-2 mb-md-0 text-truncate"
+                      className="fw-bold mb-2 mb-md-0 text-truncate pe-2"
                     >
                       {r.titulo}
                     </div>
 
+                    {/* NUEVO: Vecino */}
+                    <div
+                      style={{ flex: 1.5 }}
+                      className="d-flex justify-content-between align-items-center mb-2 mb-md-0 pe-2"
+                    >
+                      <span
+                        className="d-md-none text-muted fw-bold"
+                        style={{
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Vecino
+                      </span>
+                      <span
+                        className="text-truncate"
+                        style={{ fontSize: "0.9rem", color: "var(--sombra)" }}
+                      >
+                        {r.usuario?.nombre || "Anónimo"}
+                      </span>
+                    </div>
+                    <div
+                      style={{ flex: 1 }}
+                      className="d-flex justify-content-between align-items-center mb-2 mb-md-0"
+                    >
+                      <span
+                        className="d-md-none text-muted fw-bold"
+                        style={{
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Fecha
+                      </span>
+                      <span
+                        style={{ fontSize: "0.85rem", color: "var(--muted)" }}
+                      >
+                        {new Date(r.createdAt).toLocaleDateString("es-AR")}
+                      </span>
+                    </div>
                     <div
                       style={{ flex: 1 }}
                       className="d-flex justify-content-between align-items-center mb-2 mb-md-0"
@@ -264,6 +307,7 @@ export default function AdminPage() {
                       <span className="ca-badge">{r.categoria}</span>
                     </div>
 
+                    {/* Estado */}
                     <div
                       style={{ flex: 1 }}
                       className="d-flex justify-content-between align-items-center mb-3 mb-md-0"
@@ -277,8 +321,6 @@ export default function AdminPage() {
                       >
                         Estado
                       </span>
-
-                      {/* 🌟 USAMOS EL NUEVO COMPONENTE DROPDOWN AQUÍ */}
                       <StatusDropdown
                         estadoActual={r.estado}
                         onCambiarEstado={(nuevoEstado) =>
@@ -288,6 +330,7 @@ export default function AdminPage() {
                       />
                     </div>
 
+                    {/* Acciones */}
                     <div
                       style={{ flex: 1.5 }}
                       className="d-flex justify-content-md-end gap-2"
@@ -296,7 +339,7 @@ export default function AdminPage() {
                         onClick={() => setReporteDetalle(r)}
                         className="btn btn-sm btn-light rounded-pill flex-grow-1 flex-md-grow-0 px-3"
                       >
-                        👁️ Ver
+                        Ver
                       </button>
                       <button
                         onClick={() => handleEliminarReporte(r.id)}

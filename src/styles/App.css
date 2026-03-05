@@ -343,13 +343,13 @@ a:focus-visible,
   letter-spacing: 3px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   font-weight: 700;
 }
-.auth-mountain {
+.auth-logo-mountain {
   font-size: 5rem;
   line-height: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
 }
 .auth-quote {
