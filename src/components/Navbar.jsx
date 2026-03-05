@@ -28,14 +28,14 @@ export default function Navbar() {
         <div className="ca-brand-titles">
           {/* Parte Municipal */}
           <div className="ca-muni-group">
-            <span className="ca-muni-top">MUNICIPALIDAD DE</span>
-            <span className="ca-muni-bottom">CACHI</span>
+            <span className="ca-muni-top">Municipalidad de</span>
+            <span className="ca-muni-bottom">Cachi</span>
           </div>
 
           {/* Parte del Proyecto */}
           <div className="ca-project-name">
-            <div className="ca-brand-dot"></div>
-            Cachi<span>Activa</span>
+            <span className="ca-project-top">Secretaría de</span>
+            <span className="ca-project-bottom">Obras Públicas</span>
           </div>
         </div>
       </Link>
