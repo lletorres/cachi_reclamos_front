@@ -267,12 +267,12 @@
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
-  cursor: pointer;
+  cursor: default;
   position: relative;
 }
 .ca-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--card-hover);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 .ca-card-img {
   width: 100%;
