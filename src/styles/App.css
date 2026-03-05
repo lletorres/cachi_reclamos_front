@@ -146,7 +146,7 @@ a:focus-visible,
 }
 
 .ca-muni-top {
-  font-size: 11px;
+  font-size: 14px;
   color: #2d6a4f;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -169,7 +169,7 @@ a:focus-visible,
   border-bottom: none;
 }
 .ca-project-top {
-  font-size: 11px;
+  font-size: 14px;
   color: #c8872a;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -266,13 +266,13 @@ a:focus-visible,
     padding-right: 8px;
   }
   .ca-muni-top {
-    font-size: 0.4rem;
+    font-size: 10px;
   }
   .ca-muni-bottom {
     font-size: 0.9rem;
   }
   .ca-project-top {
-    font-size: 0.4rem;
+    font-size: 10px;
   }
   .ca-project-bottom {
     font-size: 0.9rem;
