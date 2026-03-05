@@ -4,8 +4,7 @@
    Un solo bloque :root, un solo body, un solo @keyframes por nombre.
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap");
 /* ── TOKENS GLOBALES ── */
 :root {
   --ocre: #c8872a;
@@ -146,17 +145,19 @@ a:focus-visible,
 }
 
 .ca-muni-top {
+  font-family: "Lora", serif;
+  font-weight: 600; /* 👈 Ahora es Semibold */
   font-size: 14px;
   color: #2d6a4f;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
 }
 
 .ca-muni-bottom {
+  font-family: "Lora", serif;
+  font-weight: 600; /* 👈 Ahora es Semibold */
   font-size: 20px;
   color: #2d6a4f;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0px;
 }
 /* Texto del Proyecto (Cachi Activa) */
 .ca-project-name {
@@ -169,16 +170,18 @@ a:focus-visible,
   border-bottom: none;
 }
 .ca-project-top {
+  font-family: "Lora", serif;
+  font-weight: 600; /* 👈 Ahora es Semibold */
   font-size: 14px;
   color: #c8872a;
-  font-weight: 700;
   letter-spacing: 0.5px;
 }
 .ca-project-bottom {
+  font-family: "Lora", serif;
+  font-weight: 600; /* 👈 Ahora es Semibold */
   font-size: 20px;
   color: #2d6a4f;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0px;
 }
 .ca-nav-actions {
   display: flex;
