@@ -365,6 +365,37 @@
   color: rgba(255, 255, 255, 0.4);
   margin-bottom: 0.9rem;
 }
+.rp-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #f0f2f5;
+  border: 1px solid #ddd;
+  border-radius: 20px; /* Bordes bien redondeados estilo píldora */
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rp-chip:hover {
+  background-color: #e4e6e9;
+}
+
+.rp-chip.selected {
+  background-color: #e8f5e9; /* Un verde clarito */
+  border-color: #4caf50;
+  color: #2e7d32;
+  font-weight: bold;
+}
 .rp-submit {
   width: 100%;
   padding: 1.1rem;
@@ -572,5 +603,65 @@
   }
   .rp-preview img {
     max-height: 160px;
+  }
+}
+/* Ocultamos el aviso por defecto (para computadoras) */
+.rp-swipe-hint {
+  display: none;
+}
+
+/* =========================================
+   📱 OPTIMIZACIÓN MOBILE PARA CATEGORÍAS
+   ========================================= */
+@media (max-width: 768px) {
+  /* 🌟 Hacemos aparecer el aviso solo en celulares, entre el título y las píldoras */
+  .rp-swipe-hint {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 2px;
+    margin-bottom: 8px; /* Lo separa un poco de las píldoras */
+    animation: fadeInOut 2.5s infinite;
+    text-align: center;
+  }
+
+  /* ... acá sigue el código que ya habías puesto para .rp-chips-container ... */
+}
+
+/* Opcional: Una animación suave para que el texto llame un poquito la atención */
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* =========================================
+   📱 OPTIMIZACIÓN MOBILE PARA CATEGORÍAS
+   ========================================= */
+@media (max-width: 768px) {
+  .rp-chips-container {
+    flex-wrap: nowrap; /* Evita que caigan a la segunda línea */
+    overflow-x: auto; /* Activa el scroll horizontal */
+    padding-bottom: 8px; /* Da un respiro abajo */
+
+    /* Hace que el deslizamiento sea suave y fluido en iPhone/Android */
+    -webkit-overflow-scrolling: touch;
+
+    /* Ocultamos la barra de scroll fea para que se vea limpio */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  /* Ocultamos la barra de scroll en Chrome/Safari/Brave */
+  .rp-chips-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rp-chip {
+    flex: 0 0 auto; /* Evita que el texto se aplaste y respeta su tamaño real */
+    white-space: nowrap; /* Evita que el texto se corte en dos líneas */
   }
 }

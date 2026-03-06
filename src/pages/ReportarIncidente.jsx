@@ -5,15 +5,18 @@ import { createReporte } from "../services/api";
 import "../styles/pages/ReportarIncidente.css";
 
 const CATEGORIAS = [
-  { id: "Bacheo", emoji: "🛣️", label: "Bacheo", desc: "Baches y calzada" },
-  {
-    id: "Alumbrado",
-    emoji: "💡",
-    label: "Alumbrado",
-    desc: "Luminarias y luz",
-  },
-  { id: "Basura", emoji: "🗑️", label: "Basura", desc: "Residuos y limpieza" },
-  { id: "Otros", emoji: "📌", label: "Otros", desc: "Otro tipo de problema" },
+  { id: "Calles", emoji: "🛣️", label: "Calles y pavimento" },
+  { id: "Alumbrado", emoji: "💡", label: "Alumbrado público" },
+  { id: "Limpieza", emoji: "🗑️", label: "Limpieza urbana y residuos" },
+  { id: "Desagües", emoji: "🌧️", label: "Desagües y drenaje" }, // 👈 ¡Acá está el que faltaba!
+  { id: "Espacios Verdes", emoji: "🌳", label: "Espacios verdes y arbolado" },
+  { id: "Plazas", emoji: "🛝", label: "Plazas y espacios públicos" },
+  { id: "Tránsito", emoji: "🚦", label: "Tránsito y señalización" },
+  { id: "Agua", emoji: "🚰", label: "Agua y saneamiento" },
+  { id: "Control", emoji: "🚔", label: "Control urbano" },
+  { id: "Obras", emoji: "🏗️", label: "Obras públicas" },
+  { id: "Seguridad", emoji: "🚨", label: "Seguridad urbana" },
+  { id: "Otros", emoji: "📋", label: "Otros reclamos" },
 ];
 
 export default function ReportarIncidente() {
@@ -199,26 +202,25 @@ export default function ReportarIncidente() {
             </div>
 
             {/* Sección 2 — Categoría */}
+
             <div className="rp-section">
               <div className="rp-section-title">
                 🏷️ Categoría
                 {catOk && <span className="rp-cat-ok">✅ Seleccionada</span>}
               </div>
-              <div className="rp-cat-grid">
+              <div className="rp-swipe-hint">⬅️ Deslizá para ver más ➡️</div>
+              <div className="rp-chips-container">
                 {CATEGORIAS.map((cat) => (
                   <button
                     type="button"
                     key={cat.id}
-                    className={`rp-cat-pill ${formData.categoria === cat.id ? "selected" : ""}`}
+                    className={`rp-chip ${formData.categoria === cat.id ? "selected" : ""}`}
                     onClick={() =>
                       setFormData({ ...formData, categoria: cat.id })
                     }
                   >
-                    <span className="rp-cat-emoji">{cat.emoji}</span>
-                    <span className="rp-cat-info">
-                      <span className="rp-cat-name">{cat.label}</span>
-                      <span className="rp-cat-desc">{cat.desc}</span>
-                    </span>
+                    <span className="rp-chip-emoji">{cat.emoji}</span>
+                    <span className="rp-chip-label">{cat.label}</span>
                   </button>
                 ))}
               </div>

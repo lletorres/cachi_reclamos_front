@@ -247,10 +247,37 @@ const Home = () => {
       </div>
 
       {/* ── FOOTER ── */}
-      <footer className="ca-footer">
-        <p>
-          <strong>Cachi Activa</strong> · Hecho con ❤️ por y para la comunidad
-          cacheña · {new Date().getFullYear()}
+      <footer
+        className="ca-footer"
+        style={{ textAlign: "center", padding: "2rem 1rem", color: "#666" }}
+      >
+        <div
+          className="ca-footer-contact"
+          style={{ marginBottom: "15px", lineHeight: "1.6" }}
+        >
+          <p style={{ margin: "0" }}>
+            📍 Av. M. M. de Güemes s/n, CP 4417, Cachi, Salta, Argentina
+          </p>
+          <p style={{ margin: "0" }}>
+            📞{" "}
+            <a
+              href="tel:+543868491053"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Tel. +54 3868 491 053
+            </a>
+            &nbsp; - &nbsp; ✉️{" "}
+            <a
+              href="mailto:municipalidaddecachi@gmail.com"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Correo: municipalidaddecachi@gmail.com
+            </a>
+          </p>
+        </div>
+        <p style={{ margin: "0", fontSize: "0.9rem" }}>
+          <strong>Cachi Activa</strong> © Todos los derechos reservados·{" "}
+          {new Date().getFullYear()}
         </p>
       </footer>
     </>
