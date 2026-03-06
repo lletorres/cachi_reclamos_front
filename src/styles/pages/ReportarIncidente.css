@@ -620,7 +620,7 @@
     font-size: 0.8rem;
     color: #888;
     margin-top: 2px;
-    margin-bottom: 8px; /* Lo separa un poco de las píldoras */
+    margin-bottom: 15px; /* Lo separa un poco de las píldoras */
     animation: fadeInOut 2.5s infinite;
     text-align: center;
   }
