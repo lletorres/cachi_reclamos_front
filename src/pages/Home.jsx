@@ -27,7 +27,21 @@ const Home = () => {
     }
   };
 
-  const categorias = ["Todos", "Bacheo", "Alumbrado", "Basura", "Otros"];
+  const categorias = [
+    "Todos",
+    "Calles",
+    "Alumbrado",
+    "Limpieza",
+    "Desagües",
+    "Espacios Verdes",
+    "Plazas",
+    "Tránsito",
+    "Agua",
+    "Control",
+    "Obras",
+    "Seguridad",
+    "Otros",
+  ];
 
   const reportesFiltrados =
     filtro === "Todos"
@@ -43,10 +57,18 @@ const Home = () => {
   };
 
   const categoriaMeta = {
-    Bacheo: { emoji: "🛣️", color: "#c0392b", bg: "#fdf0ee" },
+    Calles: { emoji: "🛣️", color: "#4a4a4a", bg: "#f0f0f0" },
     Alumbrado: { emoji: "💡", color: "#b7770d", bg: "#fef9ec" },
-    Basura: { emoji: "🗑️", color: "#2d6a4f", bg: "#edf7f1" },
-    Otros: { emoji: "📌", color: "#5c4a2a", bg: "#f5f0e8" },
+    Limpieza: { emoji: "🗑️", color: "#2d6a4f", bg: "#edf7f1" },
+    Desagües: { emoji: "🌧️", color: "#2980b9", bg: "#eaf2f8" },
+    "Espacios Verdes": { emoji: "🌳", color: "#27ae60", bg: "#e9f7ef" },
+    Plazas: { emoji: "🛝", color: "#d35400", bg: "#fbeee6" },
+    Tránsito: { emoji: "🚦", color: "#c0392b", bg: "#fdf0ee" },
+    Agua: { emoji: "🚰", color: "#3498db", bg: "#ebf5fb" },
+    Control: { emoji: "🚔", color: "#34495e", bg: "#ebedef" },
+    Obras: { emoji: "🏗️", color: "#e67e22", bg: "#fdf2e9" },
+    Seguridad: { emoji: "🚨", color: "#c0392b", bg: "#f2dede" },
+    Otros: { emoji: "📋", color: "#5c4a2a", bg: "#f5f0e8" },
   };
 
   const getMeta = (cat) => categoriaMeta[cat] || categoriaMeta["Otros"];
@@ -141,15 +163,21 @@ const Home = () => {
             Reportes <span>recientes</span>
           </h2>
           <div className="ca-filters">
-            {categorias.map((cat) => (
-              <button
-                key={cat}
-                className={`ca-chip ${filtro === cat ? "active" : ""}`}
-                onClick={() => handleFiltro(cat)}
+            <div className="ca-select-wrapper">
+              <select
+                className="ca-select"
+                value={filtro}
+                onChange={(e) => handleFiltro(e.target.value)}
               >
-                {cat === "Todos" ? "🗂 Todos" : `${getMeta(cat).emoji} ${cat}`}
-              </button>
-            ))}
+                {categorias.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat === "Todos"
+                      ? "🗂 Mostrar todos los reportes"
+                      : `${getMeta(cat).emoji} Filtrar por: ${cat}`}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 

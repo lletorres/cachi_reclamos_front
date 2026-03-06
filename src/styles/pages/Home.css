@@ -461,7 +461,55 @@
 .ca-footer strong {
   color: rgba(255, 255, 255, 0.7);
 }
+/* =========================================
+   🗂️ ESTILOS DEL SELECT DE FILTROS (HOME)
+   ========================================= */
+.ca-select-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 350px; /* Para que no sea infinito en la PC */
+  margin: 0 0 20px 0;
+}
 
+.ca-select {
+  width: 100%;
+  padding: 14px 30px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #333;
+  background-color: #f8f9fa;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+
+  /* Esto borra la flechita fea por defecto del navegador */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.ca-select:focus {
+  border-color: #2d6a4f; /* Verde de tu paleta */
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.1);
+}
+
+/* Dibujamos nuestra propia flecha elegante */
+.ca-select-wrapper::after {
+  content: "▼";
+  font-size: 0.8rem;
+  color: #666;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Para que no interfiera si el usuario hace clic justo ahí */
+}
 /* ---------------------- Responsive helpers ---------------------- */
 @media (max-width: 900px) {
   .ca-section {
