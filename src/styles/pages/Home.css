@@ -454,12 +454,52 @@
   background: var(--sombra);
   color: rgba(255, 255, 255, 0.45);
   text-align: center;
-  padding: 2rem;
+  padding: 2rem 1rem;
   font-size: 0.8rem;
   letter-spacing: 0.3px;
 }
 .ca-footer strong {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estructura del contacto */
+.ca-footer-contact {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+.ca-footer-address {
+  margin: 0 0 8px 0;
+}
+.ca-footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.ca-footer-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ca-footer-links a:hover {
+  color: rgba(255, 255, 255, 0.9); /* Brilla un poco al pasar el mouse */
+}
+.ca-footer-copy {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   📱 OPTIMIZACIÓN MOBILE PARA FOOTER
+   ========================================= */
+@media (max-width: 600px) {
+  .ca-footer-links {
+    flex-direction: column; /* Apila el teléfono y el mail verticalmente */
+    gap: 10px; /* Espacio entre los dos */
+  }
+  .ca-footer-divider {
+    display: none; /* Ocultamos el guión en celulares porque ya no hace falta */
+  }
 }
 /* =========================================
    🗂️ ESTILOS DEL SELECT DE FILTROS (HOME)
