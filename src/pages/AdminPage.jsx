@@ -243,7 +243,7 @@ export default function AdminPage() {
                     key={r.id}
                     className="d-flex flex-column flex-md-row align-items-md-center py-3 py-md-2 border-bottom"
                   >
-                    {/* Título */}
+                    {/* 1. Título */}
                     <div
                       style={{ flex: 2 }}
                       className="fw-bold mb-2 mb-md-0 text-truncate pe-2"
@@ -251,7 +251,7 @@ export default function AdminPage() {
                       {r.titulo}
                     </div>
 
-                    {/* NUEVO: Vecino */}
+                    {/* 2. Vecino */}
                     <div
                       style={{ flex: 1.5 }}
                       className="d-flex justify-content-between align-items-center mb-2 mb-md-0 pe-2"
@@ -272,6 +272,8 @@ export default function AdminPage() {
                         {r.usuario?.nombre || "Anónimo"}
                       </span>
                     </div>
+
+                    {/* 3. Fecha */}
                     <div
                       style={{ flex: 1 }}
                       className="d-flex justify-content-between align-items-center mb-2 mb-md-0"
@@ -291,6 +293,8 @@ export default function AdminPage() {
                         {new Date(r.createdAt).toLocaleDateString("es-AR")}
                       </span>
                     </div>
+
+                    {/* 4. Categoría */}
                     <div
                       style={{ flex: 1 }}
                       className="d-flex justify-content-between align-items-center mb-2 mb-md-0"
@@ -304,10 +308,15 @@ export default function AdminPage() {
                       >
                         Categoría
                       </span>
-                      <span className="ca-badge">{r.categoria}</span>
+                      <span
+                        className="ca-badge"
+                        style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem" }}
+                      >
+                        {r.categoria}
+                      </span>
                     </div>
 
-                    {/* Estado */}
+                    {/* 5. Estado */}
                     <div
                       style={{ flex: 1 }}
                       className="d-flex justify-content-between align-items-center mb-3 mb-md-0"
@@ -330,7 +339,7 @@ export default function AdminPage() {
                       />
                     </div>
 
-                    {/* Acciones */}
+                    {/* 6. Acciones */}
                     <div
                       style={{ flex: 1.5 }}
                       className="d-flex justify-content-md-end gap-2"
