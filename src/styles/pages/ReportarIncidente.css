@@ -605,63 +605,23 @@
     max-height: 160px;
   }
 }
-/* Ocultamos el aviso por defecto (para computadoras) */
-.rp-swipe-hint {
-  display: none;
-}
 
 /* =========================================
-   📱 OPTIMIZACIÓN MOBILE PARA CATEGORÍAS
-   ========================================= */
-@media (max-width: 768px) {
-  /* 🌟 Hacemos aparecer el aviso solo en celulares, entre el título y las píldoras */
-  .rp-swipe-hint {
-    display: block;
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 2px;
-    margin-bottom: 15px; /* Lo separa un poco de las píldoras */
-    animation: fadeInOut 2.5s infinite;
-    text-align: center;
-  }
-
-  /* ... acá sigue el código que ya habías puesto para .rp-chips-container ... */
-}
-
-/* Opcional: Una animación suave para que el texto llame un poquito la atención */
-@keyframes fadeInOut {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-/* =========================================
-   📱 OPTIMIZACIÓN MOBILE PARA CATEGORÍAS
+   📱 MOBILE: TODAS LAS CATEGORÍAS VISIBLES (SIN SCROLL)
    ========================================= */
 @media (max-width: 768px) {
   .rp-chips-container {
-    flex-wrap: nowrap; /* Evita que caigan a la segunda línea */
-    overflow-x: auto; /* Activa el scroll horizontal */
-    padding-bottom: 8px; /* Da un respiro abajo */
-
-    /* Hace que el deslizamiento sea suave y fluido en iPhone/Android */
-    -webkit-overflow-scrolling: touch;
-
-    /* Ocultamos la barra de scroll fea para que se vea limpio */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-  }
-
-  /* Ocultamos la barra de scroll en Chrome/Safari/Brave */
-  .rp-chips-container::-webkit-scrollbar {
-    display: none;
+    display: flex;
+    flex-wrap: wrap; /* 🌟 LA MAGIA: Obliga a los botones a caer a la siguiente línea */
+    justify-content: flex-start; /* Alineados a la izquierda (podés probar 'center' también) */
+    gap: 8px; /* Un poquito menos de espacio entre botones para que entren más */
+    padding-bottom: 5px;
   }
 
   .rp-chip {
-    flex: 0 0 auto; /* Evita que el texto se aplaste y respeta su tamaño real */
-    white-space: nowrap; /* Evita que el texto se corte en dos líneas */
+    flex: 0 1 auto; /* Permite que el botón se adapte al tamaño de la pantalla si es muy chica */
+    font-size: 0.85rem; /* Achicamos apenitas la letra en el celu */
+    padding: 6px 12px; /* Botones un poco más finitos */
+    white-space: normal; /* Permite que el texto baje a dos líneas si el botón es muy largo */
   }
 }

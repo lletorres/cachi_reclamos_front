@@ -208,7 +208,7 @@ export default function ReportarIncidente() {
                 🏷️ Categoría
                 {catOk && <span className="rp-cat-ok">✅ Seleccionada</span>}
               </div>
-              <div className="rp-swipe-hint">⬅️ Deslizá para ver más ➡️</div>
+
               <div className="rp-chips-container">
                 {CATEGORIAS.map((cat) => (
                   <button
