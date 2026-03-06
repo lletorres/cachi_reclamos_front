@@ -501,54 +501,98 @@
     display: none; /* Ocultamos el guión en celulares porque ya no hace falta */
   }
 }
-/* =========================================
-   🗂️ ESTILOS DEL SELECT DE FILTROS (HOME)
-   ========================================= */
+
+/* ===== FILTRO MODERNO — estilo pill flotante ===== */
+
 .ca-select-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 350px; /* Para que no sea infinito en la PC */
-  margin: 0 0 20px 0;
-}
-
-.ca-select {
-  width: 100%;
-  padding: 14px 30px;
-  font-size: 1rem;
-  font-family: inherit;
-  font-weight: 500;
-  color: #333;
-  background-color: #f8f9fa;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-
-  /* Esto borra la flechita fea por defecto del navegador */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
+  user-select: none;
+
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 100px; /* pill shape */
+  padding: 10px 20px 10px 16px;
+  gap: 8px;
+
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  letter-spacing: -0.01em;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.15s ease;
+}
+
+/* Hover */
+.ca-select-wrapper:hover {
+  border-color: #cbd5e1;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  background: #fafafa;
+}
+
+/* Focus / abierto */
+.ca-select-wrapper:focus-within {
+  border-color: #2d6a4f;
+  box-shadow:
+    0 0 0 3px rgba(45, 106, 79, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08);
   outline: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.ca-select:focus {
-  border-color: #2d6a4f; /* Verde de tu paleta */
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.1);
-}
-
-/* Dibujamos nuestra propia flecha elegante */
+/* ===== CHEVRON — línea SVG inline, sin pseudo-elemento feo ===== */
 .ca-select-wrapper::after {
-  content: "▼";
-  font-size: 0.8rem;
-  color: #666;
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-right: 1.75px solid #64748b;
+  border-bottom: 1.75px solid #64748b;
+  border-radius: 1px;
+  transform: rotate(45deg) translateY(-2px);
+  margin-left: 4px;
+  flex-shrink: 0;
+
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s ease;
+}
+
+/* Chevron rotado cuando está abierto */
+.ca-select-wrapper.is-open::after,
+.ca-select-wrapper:focus-within::after {
+  transform: rotate(225deg) translateY(-2px);
+  border-color: #2d6a4f;
+}
+
+/* Hover sobre el chevron */
+.ca-select-wrapper:hover::after {
+  border-color: #334155;
+}
+
+/* ===== SELECT nativo invisible por encima ===== */
+.ca-select-wrapper select {
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; /* Para que no interfiera si el usuario hace clic justo ahí */
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+.ca-select-label {
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* ---------------------- Responsive helpers ---------------------- */
 @media (max-width: 900px) {

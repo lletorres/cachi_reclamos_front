@@ -164,8 +164,12 @@ const Home = () => {
           </h2>
           <div className="ca-filters">
             <div className="ca-select-wrapper">
+              <span className="ca-select-label">
+                {filtro === "Todos"
+                  ? "🗂 Mostrar todos los reportes"
+                  : `${getMeta(filtro).emoji} Filtrar por: ${filtro}`}
+              </span>
               <select
-                className="ca-select"
                 value={filtro}
                 onChange={(e) => handleFiltro(e.target.value)}
               >
