@@ -286,7 +286,7 @@ Se realizó **testing manual** del sistema, documentado con criterios de calidad
 - Testing de seguridad básico (auth, JWT expirado, acceso sin token)
 - Testing de API con Postman (16 casos)
 
-📄 La documentación completa de QA está disponible en la carpeta [`/qa`](./qa/) del repositorio e incluye:
+📄 La documentación completa de QA está disponible en la carpeta [QA Documentation](./docs/cachi_activa_QA_doc.pdf)
 
 - Test Plan con alcance y criterios
 - Test Cases detallados con pasos y resultados esperados
@@ -334,7 +334,7 @@ Algunos de los conceptos que practiqué y consolidé con este proyecto:
 
 ## 👨‍💻 Autor
 
-**Lean Torres**
+**Leandro Torres**
 
 Desarrollador Full Stack en formación, con foco en proyectos con impacto real y buenas prácticas desde el primer día.
 
