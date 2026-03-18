@@ -34,6 +34,7 @@ Con esta plataforma, cualquier vecino puede registrarse, iniciar sesión y carga
 ## 🚀 Funcionalidades principales
 
 ### 👤 Para vecinos
+
 - Registro e inicio de sesión con autenticación segura (JWT)
 - Creación de reclamos con título, descripción y categoría
 - Adjuntar imagen como evidencia del problema (se sube a Cloudinary)
@@ -41,12 +42,14 @@ Con esta plataforma, cualquier vecino puede registrarse, iniciar sesión y carga
 - Ver el listado de reclamos registrados
 
 ### 🛠️ Para administradores
+
 - Panel de administración con vista de todos los reclamos
 - Cambiar el estado de un reclamo: `Pendiente` → `En Proceso` → `Resuelto`
 - Gestión de usuarios: ver, cambiar rol y eliminar cuentas
 - Recibir notificación por email cuando se crea un nuevo reclamo
 
 ### ⚙️ Técnico
+
 - API REST con Express.js y Node.js
 - Persistencia de datos con MongoDB Atlas
 - Almacenamiento de imágenes en Cloudinary (conversión automática a WebP)
@@ -58,23 +61,25 @@ Con esta plataforma, cualquier vecino puede registrarse, iniciar sesión y carga
 ## 🛠️ Tecnologías utilizadas
 
 ### Backend
-| Tecnología | Uso |
-|---|---|
-| Node.js + Express 5 | Servidor y API REST |
-| MongoDB + Mongoose | Base de datos NoSQL |
-| JWT (jsonwebtoken) | Autenticación y autorización |
-| bcryptjs | Hasheo de contraseñas |
+
+| Tecnología          | Uso                                 |
+| ------------------- | ----------------------------------- |
+| Node.js + Express 5 | Servidor y API REST                 |
+| MongoDB + Mongoose  | Base de datos NoSQL                 |
+| JWT (jsonwebtoken)  | Autenticación y autorización        |
+| bcryptjs            | Hasheo de contraseñas               |
 | Cloudinary + Multer | Upload y transformación de imágenes |
-| Resend | Envío de emails transaccionales |
-| dotenv | Variables de entorno |
-| nodemon | Desarrollo con recarga automática |
+| Resend              | Envío de emails transaccionales     |
+| dotenv              | Variables de entorno                |
+| nodemon             | Desarrollo con recarga automática   |
 
 ### Frontend
-| Tecnología | Uso |
-|---|---|
-| React | Interfaz de usuario |
-| React Router | Navegación entre vistas |
-| Axios / Fetch | Comunicación con la API |
+
+| Tecnología      | Uso                         |
+| --------------- | --------------------------- |
+| React           | Interfaz de usuario         |
+| React Router    | Navegación entre vistas     |
+| Axios / Fetch   | Comunicación con la API     |
 | Bootstrap / CSS | Estilos y layout responsivo |
 
 ---
@@ -83,19 +88,20 @@ Con esta plataforma, cualquier vecino puede registrarse, iniciar sesión y carga
 
 > **Nota:** Sección con imágenes del proyecto en funcionamiento.
 
-| Vista | Descripción |
-|---|---|
-| ![screenshot-login](#) | Pantalla de inicio de sesión |
-| ![screenshot-registro](#) | Formulario de registro |
-| ![screenshot-nuevo-reclamo](#) | Creación de nuevo reclamo con imagen |
-| ![screenshot-listado](#) | Listado de reclamos con estados |
-| ![screenshot-admin](#) | Panel de administración |
+| Vista                                                   | Descripción                          |
+| ------------------------------------------------------- | ------------------------------------ |
+| ![login](src/assets/images/login.png)                   | Pantalla de inicio de sesión         |
+| ![registro](src/assets/images/registro.png)             | Formulario de registro               |
+| ![uevo-reclamo](src/assets/images/creacion_reclamo.png) | Creación de nuevo reclamo con imagen |
+| ![listado](src/assets/images/listado_reportes.png)      | Listado de reclamos con estados      |
+| ![admin](src/assets/images/panel_admin.png)             | Panel de administración              |
 
 ---
 
 ## ⚙️ Instalación y ejecución local
 
 ### Requisitos previos
+
 - Node.js >= 20
 - Cuenta en MongoDB Atlas (o MongoDB local)
 - Cuenta en Cloudinary (gratuita)
@@ -210,24 +216,25 @@ Base URL: `https://[tu-backend].railway.app/api`
 
 ### Usuarios
 
-| Método | Endpoint | Descripción | Auth requerida |
-|---|---|---|---|
-| `POST` | `/users/register` | Registrar nuevo usuario | ❌ |
-| `POST` | `/users/login` | Iniciar sesión | ❌ |
-| `GET` | `/users/` | Listar todos los usuarios | ✅ Token |
-| `PATCH` | `/users/:id/rol` | Cambiar rol de usuario | ✅ Token |
-| `DELETE` | `/users/:id` | Eliminar usuario | ✅ Token |
+| Método   | Endpoint          | Descripción               | Auth requerida |
+| -------- | ----------------- | ------------------------- | -------------- |
+| `POST`   | `/users/register` | Registrar nuevo usuario   | ❌             |
+| `POST`   | `/users/login`    | Iniciar sesión            | ❌             |
+| `GET`    | `/users/`         | Listar todos los usuarios | ✅ Token       |
+| `PATCH`  | `/users/:id/rol`  | Cambiar rol de usuario    | ✅ Token       |
+| `DELETE` | `/users/:id`      | Eliminar usuario          | ✅ Token       |
 
 ### Reclamos
 
-| Método | Endpoint | Descripción | Auth requerida |
-|---|---|---|---|
-| `POST` | `/reportes/` | Crear nuevo reclamo (con imagen) | ✅ Token |
-| `GET` | `/reportes/` | Obtener todos los reclamos | ❌ |
-| `PATCH` | `/reportes/:id` | Actualizar estado del reclamo | ✅ Token |
-| `DELETE` | `/reportes/:id` | Eliminar reclamo | ✅ Token |
+| Método   | Endpoint        | Descripción                      | Auth requerida |
+| -------- | --------------- | -------------------------------- | -------------- |
+| `POST`   | `/reportes/`    | Crear nuevo reclamo (con imagen) | ✅ Token       |
+| `GET`    | `/reportes/`    | Obtener todos los reclamos       | ❌             |
+| `PATCH`  | `/reportes/:id` | Actualizar estado del reclamo    | ✅ Token       |
+| `DELETE` | `/reportes/:id` | Eliminar reclamo                 | ✅ Token       |
 
 **Ejemplo de body para crear reclamo** (multipart/form-data):
+
 ```
 titulo: "Bache en Av. San Martín"
 descripcion: "Bache de gran tamaño frente al número 452"
@@ -243,6 +250,7 @@ imagen: [archivo de imagen]
 ## 🛡️ Seguridad
 
 ### Implementado
+
 - ✅ Contraseñas hasheadas con **bcryptjs** (salt rounds: 10)
 - ✅ Autenticación por **JWT** con expiración de 24h
 - ✅ El campo `password` nunca se retorna en las respuestas (eliminado en `toJSON`)
@@ -251,6 +259,7 @@ imagen: [archivo de imagen]
 - ✅ Imágenes procesadas y transformadas en Cloudinary (no se guardan localmente)
 
 ### Pendiente de implementar (mejoras conocidas)
+
 - ⚠️ Verificación de rol `admin` en rutas administrativas (RBAC completo)
 - ⚠️ Rate limiting en endpoints de login y registro
 - ⚠️ Sanitización de inputs con `express-validator`
@@ -262,21 +271,23 @@ imagen: [archivo de imagen]
 
 Se realizó **testing manual** del sistema, documentado con criterios de calidad profesionales:
 
-| Métrica | Resultado |
-|---|---|
-| Test Cases ejecutados | 18 |
-| ✅ PASS | 13 (72.2%) |
-| ❌ FAIL | 5 (27.8%) |
-| Bugs reportados | 6 |
-| Bugs críticos | 1 (verificación de rol) |
+| Métrica               | Resultado               |
+| --------------------- | ----------------------- |
+| Test Cases ejecutados | 18                      |
+| ✅ PASS               | 13 (72.2%)              |
+| ❌ FAIL               | 5 (27.8%)               |
+| Bugs reportados       | 6                       |
+| Bugs críticos         | 1 (verificación de rol) |
 
 **Tipos de testing realizados:**
+
 - Testing funcional (flujos principales)
 - Testing negativo (datos inválidos, campos vacíos)
 - Testing de seguridad básico (auth, JWT expirado, acceso sin token)
 - Testing de API con Postman (16 casos)
 
 📄 La documentación completa de QA está disponible en la carpeta [`/qa`](./qa/) del repositorio e incluye:
+
 - Test Plan con alcance y criterios
 - Test Cases detallados con pasos y resultados esperados
 - Test Execution Report
@@ -289,15 +300,18 @@ Se realizó **testing manual** del sistema, documentado con criterios de calidad
 Algunos de los conceptos que practiqué y consolidé con este proyecto:
 
 **Backend y arquitectura:**
+
 - Separación en capas (routes → controllers → services) para mantener el código limpio y testeable
 - Implementación de autenticación stateless con JWT desde cero
 - Integración con servicios externos (Cloudinary para imágenes, Resend para emails) usando variables de entorno
 
 **Bases de datos:**
+
 - Modelado de datos con Mongoose y relaciones entre colecciones (`populate`)
 - Uso de `toJSON` para limpiar automáticamente datos sensibles en las respuestas
 
 **Buenas prácticas:**
+
 - La importancia de validar tanto en el frontend como en el backend (aprendido a partir de bugs encontrados en testing)
 - Por qué el testing negativo y de seguridad es tan importante como el happy path
 - Cómo documentar bugs de forma que sean reproducibles y accionables
